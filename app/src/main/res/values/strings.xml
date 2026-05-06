@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">appTimViecLam</string>
+    <string name="title">Tiêu đề:</string>
+    <string name="company">Tên công ty:</string>
+    <string name="location">Vị trí</string>
+    <string name="types">Chuyên ngành:</string>
+    <string name="pulish">Ngày đăng</string>
+    <array name="cities">
+        <item>HoChiMinh</item>
+        <item>HaNoi</item>
+        <item>Hue</item>
+        <item>Hai Phong</item>
+    </array>
 </resources>

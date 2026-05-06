@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title">Tiêu đề:</string>
+    <string name="location">Vị trí</string>
+    <string name="types">Chuyên ngành:</string>
+    <string name="pulish">Ngày đăng</string>
+</resources>
