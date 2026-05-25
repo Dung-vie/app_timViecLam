@@ -38,6 +38,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    buildFeatures{
+        viewBinding=true
+    }
 }
 
 dependencies {
@@ -49,6 +52,7 @@ dependencies {
     implementation (libs.retrofit)
     implementation (libs.retrofit2.converter.gson)
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.play.services.maps)
     kapt("com.github.bumptech.glide:compiler:4.16.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
