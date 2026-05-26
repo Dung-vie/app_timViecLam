@@ -5,6 +5,7 @@
     <string name="location">Vị trí</string>
     <string name="types">Chuyên ngành:</string>
     <string name="pulish">Ngày đăng</string>
+    <string name="read_more">Read more</string>
     <array name="cities">
         <item>HoChiMinh</item>
         <item>HaNoi</item>

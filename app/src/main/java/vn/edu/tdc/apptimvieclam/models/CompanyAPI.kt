@@ -2,7 +2,6 @@ package vn.edu.tdc.apptimvieclam.models
 
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface CompanyAPI {
     companion object {
