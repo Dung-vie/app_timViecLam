@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "513017027418",
+    "project_id": "apptimkiemvieclam-c44a6",
+    "storage_bucket": "apptimkiemvieclam-c44a6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513017027418:android:fa10ee32f0871caca97163",
+        "android_client_info": {
+          "package_name": "vn.edu.tdc.apptimvieclam"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7atEd7ac0vJO1uQF7_V0w3omnrKGUar0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

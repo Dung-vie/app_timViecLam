@@ -7,6 +7,8 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,6 +41,12 @@ class CompanyActivity : AppCompatActivity() {
 
         // rồi mới gán vào ListView
         binding.listJob.adapter = adapter
+        //Test firebase
+        val database = Firebase.database
+        val myRef = database.getReference("message") //key
+
+        myRef.setValue("Hello, DUNG!") //value
+        //ket thuc test
 
         val spinAdapter = ArrayAdapter.createFromResource(
             this,
