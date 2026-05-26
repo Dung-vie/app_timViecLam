@@ -1,5 +1,6 @@
 package vn.edu.tdc.apptimvieclam.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -29,9 +30,17 @@ class CompanyActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = HomeLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        companies = ArrayList()
+
+        // tạo adapter trước
+        adapter = MyListViewAdapter(this, companies)
+
+        // rồi mới gán vào ListView
+        binding.listJob.adapter = adapter
         //Test firebase
         val database = Firebase.database
         val myRef = database.getReference("message") //key
@@ -44,30 +53,49 @@ class CompanyActivity : AppCompatActivity() {
             R.array.cities,
             R.layout.spinner_item_layout
         )
-        spinAdapter.setDropDownViewResource(R.layout.spinner_item_layout)
 
-        binding.spincities.onItemSelectedListener = object  : OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, p3: Long) {
-                //Lấy tên TP dược chọn trong spinner
-                city = adapterView?.selectedItem.toString()
-//                Log.d("test", city)
-                //Cập nhật lại dữ liệu thời tiết
-                getCompanies(companies)
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-
-        }
-
+        spinAdapter.setDropDownViewResource(
+            R.layout.spinner_item_layout
+        )
 
         binding.spincities.adapter = spinAdapter
-        companies = ArrayList<Company>()
-        adapter = MyListViewAdapter(this, companies)
-        binding.listJob.adapter = adapter
-    }
 
+        binding.spincities.onItemSelectedListener =
+            object : OnItemSelectedListener {
+
+                override fun onItemSelected(
+                    adapterView: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    p3: Long
+                ) {
+
+                    city = adapterView?.selectedItem.toString()
+
+                    getCompanies(companies)
+                }
+
+                override fun onNothingSelected(
+                    p0: AdapterView<*>?
+                ) {
+
+                }
+            }
+
+        binding.listJob.setOnItemClickListener { parent, view, position, id ->
+
+            val company = companies[position]
+
+            val intent = Intent(
+                this,
+                JobDetailActivity::class.java
+            )
+
+            intent.putExtra("JOB", company)
+
+            startActivity(intent)
+        }
+    }
         //B3:Viết hàm xử lý dữ liệu:
         private fun getCompanies(companies: ArrayList<Company> ) {
             //B1: Xóa dữ liệu cũ
