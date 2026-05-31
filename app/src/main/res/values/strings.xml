@@ -13,6 +13,13 @@
     <string name="qualification">Trình độ chuyên môn</string>
     <string name="experience">Kinh nghiệm</string>
     <string name="orther">Cơ sở vật chất và những thứ khác</string>
+    <string name="home">Trang chủ</string>
+    <string name="saved">Đã lưu</string>
+    <string name="notify">Thông báo</string>
+    <string name="highlight">Các công việc nổi bật</string>
+    <string name="category">Danh mục</string>
+    <string name="txtBanner">Tìm công việc theo danh mục ngay</string>
+    <string name="search">Tìm kiếm</string>
     <array name="cities">
         <item>HoChiMinh</item>
         <item>HaNoi</item>

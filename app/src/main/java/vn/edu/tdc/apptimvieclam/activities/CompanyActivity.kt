@@ -45,35 +45,37 @@ class CompanyActivity : AppCompatActivity() {
         myRef.setValue("Hello, DUNG!") //value
         //ket thuc test
 
-        val spinAdapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.cities,
-            R.layout.spinner_item_layout
-        )
 
-        spinAdapter.setDropDownViewResource(
-            R.layout.spinner_item_layout
-        )
-
-        binding.spincities.adapter = spinAdapter
-        binding.spincities.onItemSelectedListener =
-            object : OnItemSelectedListener {
-                override fun onItemSelected(
-                    adapterView: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    p3: Long
-                ) {
-                    city = adapterView?.selectedItem.toString()
-                    getCompanies(companies)
-                }
-
-                override fun onNothingSelected(
-                    p0: AdapterView<*>?
-                ) {
-
-                }
-            }
+        getCompanies(companies)
+//        val spinAdapter = ArrayAdapter.createFromResource(
+//            this,
+//            R.array.cities,
+//            R.layout.spinner_item_layout
+//        )
+//
+//        spinAdapter.setDropDownViewResource(
+//            R.layout.spinner_item_layout
+//        )
+//
+//        binding.spincities.adapter = spinAdapter
+//        binding.spincities.onItemSelectedListener =
+//            object : OnItemSelectedListener {
+//                override fun onItemSelected(
+//                    adapterView: AdapterView<*>?,
+//                    view: View?,
+//                    position: Int,
+//                    p3: Long
+//                ) {
+//                    city = adapterView?.selectedItem.toString()
+//                    getCompanies(companies)
+//                }
+//
+//                override fun onNothingSelected(
+//                    p0: AdapterView<*>?
+//                ) {
+//
+//                }
+//            }
 
         binding.listJob.setOnItemClickListener { parent, view, position, id ->
 
