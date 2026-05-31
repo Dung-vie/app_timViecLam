@@ -6,16 +6,15 @@ import android.text.Html
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import com.bumptech.glide.Glide
-import vn.edu.tdc.apptimvieclam.databinding.ActivityJobDetailBinding
+import vn.edu.tdc.apptimvieclam.databinding.JobDetailLayoutBinding
 import vn.edu.tdc.apptimvieclam.models.Company
 
 class JobDetailActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityJobDetailBinding
-
+    private lateinit var binding: JobDetailLayoutBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=ActivityJobDetailBinding.inflate(layoutInflater)
+        binding=JobDetailLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val company = intent.getSerializableExtra("JOB") as? Company
         if(company != null){
@@ -36,14 +35,14 @@ class JobDetailActivity : AppCompatActivity() {
             if(company.salaryMin != null && company.salaryMax != null){
                 "${company.salaryMin} - ${company.salaryMax}"
             }else{
-                "Negotiable"
+                "Thương lượng"
             }
         // Job type
         binding.tvJobType.text =
             if(company.types.isNotEmpty())
                 company.types[0].nameType
             else
-                "Unknown"
+                "Không"
 
         // Position
         binding.tvPosition.text =

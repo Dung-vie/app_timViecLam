@@ -5,7 +5,14 @@
     <string name="location">Vị trí</string>
     <string name="types">Chuyên ngành:</string>
     <string name="pulish">Ngày đăng</string>
-    <string name="read_more">Read more</string>
+    <string name="read_more">Đọc thêm</string>
+    <string name="requirement">Yêu cầu</string>
+    <string name="position">Chức vụ</string>
+    <string name="typeJob">Loại công việc</string>
+    <string name="salary">Lương</string>
+    <string name="qualification">Trình độ chuyên môn</string>
+    <string name="experience">Kinh nghiệm</string>
+    <string name="orther">Cơ sở vật chất và những thứ khác</string>
     <array name="cities">
         <item>HoChiMinh</item>
         <item>HaNoi</item>
