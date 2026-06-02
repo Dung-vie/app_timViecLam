@@ -15,16 +15,17 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import vn.edu.tdc.apptimvieclam.R
-import vn.edu.tdc.apptimvieclam.adapters.MyListViewAdapter
 import vn.edu.tdc.apptimvieclam.databinding.HomeLayoutBinding
 import vn.edu.tdc.apptimvieclam.models.Company
 import vn.edu.tdc.apptimvieclam.models.CompanyAPI
 import vn.edu.tdc.apptimvieclam.models.CompanyList
+import androidx.recyclerview.widget.LinearLayoutManager
+import vn.edu.tdc.apptimvieclam.adapters.JobAdapter
 
 class CompanyActivity : AppCompatActivity() {
     private lateinit var binding: HomeLayoutBinding
     private lateinit var companies: ArrayList<Company>
-    private lateinit var adapter: MyListViewAdapter
+    private lateinit var jobAdapter: JobAdapter
     private lateinit var city: String
     private lateinit var companyAPI: CompanyAPI
 
@@ -35,9 +36,12 @@ class CompanyActivity : AppCompatActivity() {
 
         companies = ArrayList()
         // tạo adapter trước
-        adapter = MyListViewAdapter(this, companies)
+        jobAdapter = JobAdapter(companies)
+
+        binding.rvJobs.layoutManager =
+            LinearLayoutManager(this)
         // rồi mới gán vào ListView
-        binding.listJob.adapter = adapter
+        binding.rvJobs.adapter = jobAdapter
 
         //Test firebase
         val database = Firebase.database
@@ -77,16 +81,6 @@ class CompanyActivity : AppCompatActivity() {
 //                }
 //            }
 
-        binding.listJob.setOnItemClickListener { parent, view, position, id ->
-
-            val company = companies[position]
-            val intent = Intent(
-                this,
-                JobDetailActivity::class.java
-            )
-            intent.putExtra("JOB", company)
-            startActivity(intent)
-        }
     }
         //B3:Viết hàm xử lý dữ liệu:
         private fun getCompanies(companies: ArrayList<Company> ) {
@@ -113,7 +107,7 @@ class CompanyActivity : AppCompatActivity() {
                             companies.addAll(it)
                         }
                         //Báo cho ListView cập nhật lại dữ liệu
-                        adapter.notifyDataSetChanged()
+                        jobAdapter.notifyDataSetChanged()
                     }
                 }
 
