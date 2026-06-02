@@ -17,6 +17,8 @@
 
 
         <activity
+            android:name=".activities.JobDetailActivity" />
+        <activity
             android:name=".activities.ForgotPasswordActivity"
             android:exported="false"/>
         <!-- Login Activity -->

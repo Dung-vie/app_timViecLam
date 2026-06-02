@@ -1,11 +1,14 @@
 package vn.edu.tdc.apptimvieclam.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Firebase
+import com.google.firebase.database.database
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,35 +33,61 @@ class CompanyActivity : AppCompatActivity() {
         binding = HomeLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val spinAdapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.cities,
-            R.layout.spinner_item_layout
-        )
-        spinAdapter.setDropDownViewResource(R.layout.spinner_item_layout)
-
-        binding.spincities.onItemSelectedListener = object  : OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, p3: Long) {
-                //Lấy tên TP dược chọn trong spinner
-                city = adapterView?.selectedItem.toString()
-//                Log.d("test", city)
-                //Cập nhật lại dữ liệu thời tiết
-                getCompanies(companies)
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-
-        }
-
-
-        binding.spincities.adapter = spinAdapter
-        companies = ArrayList<Company>()
+        companies = ArrayList()
+        // tạo adapter trước
         adapter = MyListViewAdapter(this, companies)
+        // rồi mới gán vào ListView
         binding.listJob.adapter = adapter
-    }
 
+        //Test firebase
+        val database = Firebase.database
+        val myRef = database.getReference("message") //key
+        myRef.setValue("Hello, DUNG!") //value
+        //ket thuc test
+
+
+        getCompanies(companies)
+//        val spinAdapter = ArrayAdapter.createFromResource(
+//            this,
+//            R.array.cities,
+//            R.layout.spinner_item_layout
+//        )
+//
+//        spinAdapter.setDropDownViewResource(
+//            R.layout.spinner_item_layout
+//        )
+//
+//        binding.spincities.adapter = spinAdapter
+//        binding.spincities.onItemSelectedListener =
+//            object : OnItemSelectedListener {
+//                override fun onItemSelected(
+//                    adapterView: AdapterView<*>?,
+//                    view: View?,
+//                    position: Int,
+//                    p3: Long
+//                ) {
+//                    city = adapterView?.selectedItem.toString()
+//                    getCompanies(companies)
+//                }
+//
+//                override fun onNothingSelected(
+//                    p0: AdapterView<*>?
+//                ) {
+//
+//                }
+//            }
+
+        binding.listJob.setOnItemClickListener { parent, view, position, id ->
+
+            val company = companies[position]
+            val intent = Intent(
+                this,
+                JobDetailActivity::class.java
+            )
+            intent.putExtra("JOB", company)
+            startActivity(intent)
+        }
+    }
         //B3:Viết hàm xử lý dữ liệu:
         private fun getCompanies(companies: ArrayList<Company> ) {
             //B1: Xóa dữ liệu cũ

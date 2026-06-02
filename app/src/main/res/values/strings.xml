@@ -5,6 +5,21 @@
     <string name="location">Vị trí</string>
     <string name="types">Chuyên ngành:</string>
     <string name="pulish">Ngày đăng</string>
+    <string name="read_more">Đọc thêm</string>
+    <string name="requirement">Yêu cầu</string>
+    <string name="position">Chức vụ</string>
+    <string name="typeJob">Loại công việc</string>
+    <string name="salary">Lương</string>
+    <string name="qualification">Trình độ chuyên môn</string>
+    <string name="experience">Kinh nghiệm</string>
+    <string name="orther">Cơ sở vật chất và những thứ khác</string>
+    <string name="home">Trang chủ</string>
+    <string name="saved">Đã lưu</string>
+    <string name="notify">Thông báo</string>
+    <string name="highlight">Các công việc nổi bật</string>
+    <string name="category">Danh mục</string>
+    <string name="txtBanner">Tìm công việc theo danh mục ngay</string>
+    <string name="search">Tìm kiếm</string>
     <array name="cities">
         <item>HoChiMinh</item>
         <item>HaNoi</item>
