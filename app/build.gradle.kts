@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.google.gms.google.services)
 }
 
+
 android {
     namespace = "vn.edu.tdc.apptimvieclam"
     compileSdk = 36
@@ -45,17 +46,25 @@ android {
 }
 
 dependencies {
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation (libs.retrofit)
-    implementation (libs.retrofit2.converter.gson)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.converter.gson)
+
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation(libs.play.services.maps)
     implementation(libs.firebase.database)
     kapt("com.github.bumptech.glide:compiler:4.16.0")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    implementation("com.google.firebase:firebase-auth")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
