@@ -3,64 +3,49 @@ package vn.edu.tdc.apptimvieclam.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import vn.edu.tdc.apptimvieclam.R
+import vn.edu.tdc.apptimvieclam.databinding.ForgotPasswordLayoutBinding
 
 class ForgotPasswordActivity : AppCompatActivity() {
 
+    private lateinit var binding: ForgotPasswordLayoutBinding
     private lateinit var auth: FirebaseAuth
-
-    private lateinit var edtEmail: EditText
-    private lateinit var btnResetPassword: Button
-    private lateinit var btnBackLogin: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Layout Forgot Password
-        setContentView(R.layout.forgot_password_layout)
+        // View Binding
+        binding = ForgotPasswordLayoutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Firebase
         auth = FirebaseAuth.getInstance()
 
-        // Mapping ViewA
-        edtEmail = findViewById(R.id.edtEmail)
-        btnResetPassword = findViewById(R.id.btnReset)
-        btnBackLogin = findViewById(R.id.btnBackLogin)
+        // =========================
+        // RESET PASSWORD
+        // =========================
+        binding.btnReset.setOnClickListener {
 
-        // Reset Password
-        btnResetPassword.setOnClickListener {
+            val email = binding.edtEmail.text.toString().trim()
 
-            val email = edtEmail.text.toString().trim()
-
-            // Validate
+            // Validate Email
             if (email.isEmpty()) {
 
-                Toast.makeText(
-                    this,
-                    "Vui lòng nhập email",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                binding.edtEmail.error = "Vui lòng nhập email"
+                binding.edtEmail.requestFocus()
                 return@setOnClickListener
             }
 
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
 
-                Toast.makeText(
-                    this,
-                    "Email không hợp lệ",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                binding.edtEmail.error = "Email không hợp lệ"
+                binding.edtEmail.requestFocus()
                 return@setOnClickListener
             }
 
-            // Send reset email
+            // Firebase Send Reset Email
             auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener { task ->
 
@@ -83,8 +68,10 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 }
         }
 
-        // Back Login
-        btnBackLogin.setOnClickListener {
+        // =========================
+        // BACK LOGIN
+        // =========================
+        binding.btnBackLogin.setOnClickListener {
 
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)

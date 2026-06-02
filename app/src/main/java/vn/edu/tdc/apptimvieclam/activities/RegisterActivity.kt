@@ -3,81 +3,87 @@ package vn.edu.tdc.apptimvieclam.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import vn.edu.tdc.apptimvieclam.R
+import vn.edu.tdc.apptimvieclam.databinding.RegisterLayoutBinding
 
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    // View Binding
+    private lateinit var binding: RegisterLayoutBinding
 
-    private lateinit var edtEmail: EditText
-    private lateinit var edtPassword: EditText
-    private lateinit var edtConfirmPassword: EditText
-    private lateinit var btnRegister: Button
+    // Firebase
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.register_layout)
+
+        // Binding
+        binding = RegisterLayoutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Firebase Auth
         auth = FirebaseAuth.getInstance()
 
-        // Ánh xạ view
-        edtEmail = findViewById(R.id.edtEmail)
-        edtPassword = findViewById(R.id.edtPassword)
-        edtConfirmPassword = findViewById(R.id.edtConfirmPassword)
-        btnRegister = findViewById(R.id.btnRegister)
-
         // =========================
-        // Đăng ký Firebase
+        // ĐĂNG KÝ FIREBASE
         // =========================
-        btnRegister.setOnClickListener {
+        binding.btnRegister.setOnClickListener {
 
-            val email = edtEmail.text.toString().trim()
-            val password = edtPassword.text.toString().trim()
-            val confirmPassword = edtConfirmPassword.text.toString().trim()
+            val email = binding.edtEmail.text.toString().trim()
+            val password = binding.edtPassword.text.toString().trim()
+            val confirmPassword =
+                binding.edtConfirmPassword.text.toString().trim()
 
             // Validate Email
             if (email.isEmpty()) {
-                edtEmail.error = "Vui lòng nhập email"
-                edtEmail.requestFocus()
+
+                binding.edtEmail.error = "Vui lòng nhập email"
+                binding.edtEmail.requestFocus()
                 return@setOnClickListener
             }
 
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                edtEmail.error = "Email không hợp lệ"
-                edtEmail.requestFocus()
+
+                binding.edtEmail.error = "Email không hợp lệ"
+                binding.edtEmail.requestFocus()
                 return@setOnClickListener
             }
 
             // Validate Password
             if (password.isEmpty()) {
-                edtPassword.error = "Vui lòng nhập mật khẩu"
-                edtPassword.requestFocus()
+
+                binding.edtPassword.error = "Vui lòng nhập mật khẩu"
+                binding.edtPassword.requestFocus()
                 return@setOnClickListener
             }
 
             if (password.length < 6) {
-                edtPassword.error = "Mật khẩu tối thiểu 6 ký tự"
-                edtPassword.requestFocus()
+
+                binding.edtPassword.error =
+                    "Mật khẩu tối thiểu 6 ký tự"
+
+                binding.edtPassword.requestFocus()
                 return@setOnClickListener
             }
 
             // Confirm Password
             if (confirmPassword.isEmpty()) {
-                edtConfirmPassword.error = "Vui lòng xác nhận mật khẩu"
-                edtConfirmPassword.requestFocus()
+
+                binding.edtConfirmPassword.error =
+                    "Vui lòng xác nhận mật khẩu"
+
+                binding.edtConfirmPassword.requestFocus()
                 return@setOnClickListener
             }
 
             if (password != confirmPassword) {
-                edtConfirmPassword.error = "Mật khẩu không khớp"
-                edtConfirmPassword.requestFocus()
+
+                binding.edtConfirmPassword.error =
+                    "Mật khẩu không khớp"
+
+                binding.edtConfirmPassword.requestFocus()
                 return@setOnClickListener
             }
 
@@ -94,7 +100,11 @@ class RegisterActivity : AppCompatActivity() {
                         ).show()
 
                         // Chuyển sang Login
-                        val intent = Intent(this, LoginActivity::class.java)
+                        val intent = Intent(
+                            this,
+                            LoginActivity::class.java
+                        )
+
                         startActivity(intent)
 
                         overridePendingTransition(
@@ -116,13 +126,15 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         // =========================
-        // Chuyển sang Login
+        // CHUYỂN SANG LOGIN
         // =========================
-        val txtSignIn = findViewById<TextView>(R.id.txtSignIn)
+        binding.txtSignIn.setOnClickListener {
 
-        txtSignIn.setOnClickListener {
+            val intent = Intent(
+                this,
+                LoginActivity::class.java
+            )
 
-            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
 
             overridePendingTransition(
@@ -134,13 +146,15 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         // =========================
-        // Forgot Password
+        // FORGOT PASSWORD
         // =========================
-        val txtForgotPassword = findViewById<TextView>(R.id.txtForgotPassword)
+        binding.txtForgotPassword.setOnClickListener {
 
-        txtForgotPassword.setOnClickListener {
+            val intent = Intent(
+                this,
+                ForgotPasswordActivity::class.java
+            )
 
-            val intent = Intent(this, ForgotPasswordActivity::class.java)
             startActivity(intent)
 
             overridePendingTransition(

@@ -2,60 +2,50 @@ package vn.edu.tdc.apptimvieclam.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import vn.edu.tdc.apptimvieclam.R
+import vn.edu.tdc.apptimvieclam.databinding.LoginLayoutBinding
 
 class LoginActivity : AppCompatActivity() {
 
+    // View Binding
+    private lateinit var binding: LoginLayoutBinding
+
+    // Firebase
     private lateinit var auth: FirebaseAuth
-
-    private lateinit var edtEmail: EditText
-    private lateinit var edtPassword: EditText
-
-    private lateinit var btnLogin: Button
-    private lateinit var txtSignUp: TextView
-    private lateinit var txtForgotPassword: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login_layout)
+
+        // Khởi tạo Binding
+        binding = LoginLayoutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Firebase
         auth = FirebaseAuth.getInstance()
 
-        // Ánh xạ View
-        edtEmail = findViewById(R.id.edtEmail)
-        edtPassword = findViewById(R.id.edtPassword)
-
-        btnLogin = findViewById(R.id.btnLogin)
-        txtSignUp = findViewById(R.id.txtSignUp)
-        txtForgotPassword = findViewById(R.id.txtForgotPassword)
-
         // =========================
         // LOGIN FIREBASE
         // =========================
-        btnLogin.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
 
-            val email = edtEmail.text.toString().trim()
-            val password = edtPassword.text.toString().trim()
+            val email = binding.edtEmail.text.toString().trim()
+            val password = binding.edtPassword.text.toString().trim()
 
-            // Validate
+            // Validate Email
             if (email.isEmpty()) {
 
-                edtEmail.error = "Vui lòng nhập email"
-                edtEmail.requestFocus()
+                binding.edtEmail.error = "Vui lòng nhập email"
+                binding.edtEmail.requestFocus()
                 return@setOnClickListener
             }
 
+            // Validate Password
             if (password.isEmpty()) {
 
-                edtPassword.error = "Vui lòng nhập mật khẩu"
-                edtPassword.requestFocus()
+                binding.edtPassword.error = "Vui lòng nhập mật khẩu"
+                binding.edtPassword.requestFocus()
                 return@setOnClickListener
             }
 
@@ -71,8 +61,9 @@ class LoginActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
 
-                        // TODO: Chuyển sang HomeActivity
+                        // Chuyển sang HomeActivity
                         // startActivity(Intent(this, HomeActivity::class.java))
+                        // finish()
 
                     } else {
 
@@ -88,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
         // =========================
         // SIGN UP
         // =========================
-        txtSignUp.setOnClickListener {
+        binding.txtSignUp.setOnClickListener {
 
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
@@ -102,7 +93,7 @@ class LoginActivity : AppCompatActivity() {
         // =========================
         // FORGOT PASSWORD
         // =========================
-        txtForgotPassword.setOnClickListener {
+        binding.txtForgotPassword.setOnClickListener {
 
             val intent = Intent(this, ForgotPasswordActivity::class.java)
             startActivity(intent)
