@@ -21,6 +21,7 @@ import vn.edu.tdc.apptimvieclam.models.CompanyAPI
 import vn.edu.tdc.apptimvieclam.models.CompanyList
 import androidx.recyclerview.widget.LinearLayoutManager
 import vn.edu.tdc.apptimvieclam.adapters.JobAdapter
+import android.widget.SearchView
 
 class CompanyActivity : AppCompatActivity() {
     private lateinit var binding: HomeLayoutBinding
@@ -29,12 +30,15 @@ class CompanyActivity : AppCompatActivity() {
     private lateinit var city: String
     private lateinit var companyAPI: CompanyAPI
 
+    private lateinit var allCompanies: ArrayList<Company>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = HomeLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         companies = ArrayList()
+        allCompanies = ArrayList()
         // tạo adapter trước
         jobAdapter = JobAdapter(companies)
 
@@ -48,6 +52,32 @@ class CompanyActivity : AppCompatActivity() {
         val myRef = database.getReference("message") //key
         myRef.setValue("Hello, DUNG!") //value
         //ket thuc test
+
+        // SEARCH
+        binding.searchJob.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+
+                    val filteredList = allCompanies.filter {
+                        it.title.contains(
+                            newText ?: "",
+                            ignoreCase = true
+                        )
+                    }
+
+                    jobAdapter.updateList(
+                        ArrayList(filteredList)
+                    )
+
+                    return true
+                }
+            }
+        )
 
 
         getCompanies(companies)
@@ -104,7 +134,10 @@ class CompanyActivity : AppCompatActivity() {
                         val companyList = result.body()
                         //Xư lí nullable
                         companyList?.companyList?.let {
+                            companies.clear()
                             companies.addAll(it)
+                            allCompanies.clear()
+                            allCompanies.addAll(it)
                         }
                         //Báo cho ListView cập nhật lại dữ liệu
                         jobAdapter.notifyDataSetChanged()

@@ -8,7 +8,7 @@ import vn.edu.tdc.apptimvieclam.databinding.ListJobLayoutBinding
 import vn.edu.tdc.apptimvieclam.models.Company
 
 class JobAdapter(
-    private val companies: ArrayList<Company>
+    private var companies: ArrayList<Company>
 ) : RecyclerView.Adapter<JobAdapter.JobViewHolder>() {
 
     inner class JobViewHolder(
@@ -60,5 +60,10 @@ class JobAdapter(
 
     override fun getItemCount(): Int {
         return companies.size
+    }
+
+    fun updateList(newList: ArrayList<Company>) {
+        companies = newList
+        notifyDataSetChanged()
     }
 }
