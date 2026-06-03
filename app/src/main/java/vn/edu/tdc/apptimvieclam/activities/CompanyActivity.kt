@@ -15,18 +15,22 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import vn.edu.tdc.apptimvieclam.R
-import vn.edu.tdc.apptimvieclam.adapters.MyListViewAdapter
 import vn.edu.tdc.apptimvieclam.databinding.HomeLayoutBinding
 import vn.edu.tdc.apptimvieclam.models.Company
 import vn.edu.tdc.apptimvieclam.models.CompanyAPI
 import vn.edu.tdc.apptimvieclam.models.CompanyList
+import androidx.recyclerview.widget.LinearLayoutManager
+import vn.edu.tdc.apptimvieclam.adapters.JobAdapter
+import android.widget.SearchView
 
 class CompanyActivity : AppCompatActivity() {
     private lateinit var binding: HomeLayoutBinding
     private lateinit var companies: ArrayList<Company>
-    private lateinit var adapter: MyListViewAdapter
+    private lateinit var jobAdapter: JobAdapter
     private lateinit var city: String
     private lateinit var companyAPI: CompanyAPI
+
+    private lateinit var allCompanies: ArrayList<Company>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +38,14 @@ class CompanyActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         companies = ArrayList()
+        allCompanies = ArrayList()
         // tạo adapter trước
-        adapter = MyListViewAdapter(this, companies)
+        jobAdapter = JobAdapter(companies)
+
+        binding.rvJobs.layoutManager =
+            LinearLayoutManager(this)
         // rồi mới gán vào ListView
-        binding.listJob.adapter = adapter
+        binding.rvJobs.adapter = jobAdapter
 
         //Test firebase
         val database = Firebase.database
@@ -45,8 +53,84 @@ class CompanyActivity : AppCompatActivity() {
         myRef.setValue("Hello, DUNG!") //value
         //ket thuc test
 
+        // SEARCH
+        binding.searchJob.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+
+                    val filteredList = allCompanies.filter {
+                        it.title.contains(
+                            newText ?: "",
+                            ignoreCase = true
+                        )
+                    }
+
+                    jobAdapter.updateList(
+                        ArrayList(filteredList)
+                    )
+
+                    return true
+                }
+            }
+        )
+
+        //Filter
+        binding.spFilter.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+
+                    val selected =
+                        parent?.getItemAtPosition(position)
+                            .toString()
+
+                    if (selected == "Tất cả") {
+
+                        jobAdapter.updateList(
+                            ArrayList(allCompanies)
+                        )
+
+                    } else {
+
+                        val filtered =
+                            allCompanies.filter { company ->
+
+                                company.types.any { type ->
+
+                                    type.nameType.equals(
+                                        selected,
+                                        ignoreCase = true
+                                    )
+                                }
+                            }
+
+                        jobAdapter.updateList(
+                            ArrayList(filtered)
+                        )
+                    }
+                }
+
+                override fun onNothingSelected(
+                    parent: AdapterView<*>?
+                ) {
+                }
+            }
+
 
         getCompanies(companies)
+
+
+
 //        val spinAdapter = ArrayAdapter.createFromResource(
 //            this,
 //            R.array.cities,
@@ -77,16 +161,36 @@ class CompanyActivity : AppCompatActivity() {
 //                }
 //            }
 
-        binding.listJob.setOnItemClickListener { parent, view, position, id ->
+    }
+    // ham lay filter
+    private fun loadFilterFromApi() {
 
-            val company = companies[position]
-            val intent = Intent(
-                this,
-                JobDetailActivity::class.java
-            )
-            intent.putExtra("JOB", company)
-            startActivity(intent)
+        val filterList = ArrayList<String>()
+        filterList.add("Tất cả")
+
+        val typeSet = mutableSetOf<String>()
+
+        allCompanies.forEach { company ->
+
+            company.types.forEach { type ->
+
+                typeSet.add(type.nameType)
+            }
         }
+
+        filterList.addAll(typeSet.sorted())
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            filterList
+        )
+
+        adapter.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item
+        )
+
+        binding.spFilter.adapter = adapter
     }
         //B3:Viết hàm xử lý dữ liệu:
         private fun getCompanies(companies: ArrayList<Company> ) {
@@ -110,10 +214,14 @@ class CompanyActivity : AppCompatActivity() {
                         val companyList = result.body()
                         //Xư lí nullable
                         companyList?.companyList?.let {
+                            companies.clear()
                             companies.addAll(it)
+                            allCompanies.clear()
+                            allCompanies.addAll(it)
+                            loadFilterFromApi()
                         }
                         //Báo cho ListView cập nhật lại dữ liệu
-                        adapter.notifyDataSetChanged()
+                        jobAdapter.notifyDataSetChanged()
                     }
                 }
 
