@@ -37,10 +37,10 @@
         <!-- Register Activity -->
         <activity
             android:name=".activities.RegisterActivity"
-            android:exported="true" />
+            android:exported="false" />
 
         <!-- Company Activity -->
-        <!--
+
         <activity
             android:name=".activities.CompanyActivity"
             android:exported="true">

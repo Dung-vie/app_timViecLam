@@ -8,7 +8,8 @@ import vn.edu.tdc.apptimvieclam.databinding.ListJobLayoutBinding
 import vn.edu.tdc.apptimvieclam.models.Company
 
 class JobAdapter(
-    private var companies: ArrayList<Company>
+    private var companies: ArrayList<Company>,
+    private val onItemClick: (Company) -> Unit
 ) : RecyclerView.Adapter<JobAdapter.JobViewHolder>() {
 
     inner class JobViewHolder(
@@ -56,6 +57,12 @@ class JobAdapter(
         Glide.with(holder.itemView.context)
             .load(company.company.image)
             .into(holder.binding.logo)
+
+        // CLICK
+        holder.itemView.setOnClickListener {
+            onItemClick(company)
+        }
+
     }
 
     override fun getItemCount(): Int {

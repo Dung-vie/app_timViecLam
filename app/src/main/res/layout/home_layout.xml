@@ -74,40 +74,18 @@
         android:layout_marginTop="15dp"/>
 
 
-    <LinearLayout
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:fillViewport="true">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/category"
-            android:background="#AEE5F8"/>
+        <LinearLayout
+            android:id="@+id/layoutCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_weight="1"
-            android:layout_marginStart="5dp"
-            android:gravity="center"
-            android:text="Full Time"
-            android:background="#C7B8FF"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_weight="1"
-            android:layout_marginStart="5dp"
-            android:gravity="center"
-            android:text="Part Time"
-            android:background="#FFD8B0"/>
-
-    </LinearLayout>
-
+    </HorizontalScrollView>
     <!-- Recent Job -->
     <TextView
         android:layout_width="wrap_content"
