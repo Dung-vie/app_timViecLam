@@ -79,8 +79,58 @@ class CompanyActivity : AppCompatActivity() {
             }
         )
 
+        //Filter
+        binding.spFilter.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+
+                    val selected =
+                        parent?.getItemAtPosition(position)
+                            .toString()
+
+                    if (selected == "Tất cả") {
+
+                        jobAdapter.updateList(
+                            ArrayList(allCompanies)
+                        )
+
+                    } else {
+
+                        val filtered =
+                            allCompanies.filter { company ->
+
+                                company.types.any { type ->
+
+                                    type.nameType.equals(
+                                        selected,
+                                        ignoreCase = true
+                                    )
+                                }
+                            }
+
+                        jobAdapter.updateList(
+                            ArrayList(filtered)
+                        )
+                    }
+                }
+
+                override fun onNothingSelected(
+                    parent: AdapterView<*>?
+                ) {
+                }
+            }
+
 
         getCompanies(companies)
+
+
+
 //        val spinAdapter = ArrayAdapter.createFromResource(
 //            this,
 //            R.array.cities,
@@ -112,6 +162,36 @@ class CompanyActivity : AppCompatActivity() {
 //            }
 
     }
+    // ham lay filter
+    private fun loadFilterFromApi() {
+
+        val filterList = ArrayList<String>()
+        filterList.add("Tất cả")
+
+        val typeSet = mutableSetOf<String>()
+
+        allCompanies.forEach { company ->
+
+            company.types.forEach { type ->
+
+                typeSet.add(type.nameType)
+            }
+        }
+
+        filterList.addAll(typeSet.sorted())
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            filterList
+        )
+
+        adapter.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item
+        )
+
+        binding.spFilter.adapter = adapter
+    }
         //B3:Viết hàm xử lý dữ liệu:
         private fun getCompanies(companies: ArrayList<Company> ) {
             //B1: Xóa dữ liệu cũ
@@ -138,6 +218,7 @@ class CompanyActivity : AppCompatActivity() {
                             companies.addAll(it)
                             allCompanies.clear()
                             allCompanies.addAll(it)
+                            loadFilterFromApi()
                         }
                         //Báo cho ListView cập nhật lại dữ liệu
                         jobAdapter.notifyDataSetChanged()
