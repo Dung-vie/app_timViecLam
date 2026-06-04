@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
@@ -40,7 +41,15 @@ class CompanyActivity : AppCompatActivity() {
         companies = ArrayList()
         allCompanies = ArrayList()
         // tạo adapter trước
-        jobAdapter = JobAdapter(companies)
+        jobAdapter = JobAdapter(companies) { company ->
+
+            val intent =
+                Intent(this, JobDetailActivity::class.java)
+
+            intent.putExtra("JOB", company)
+
+            startActivity(intent)
+        }
 
         binding.rvJobs.layoutManager =
             LinearLayoutManager(this)
@@ -55,7 +64,7 @@ class CompanyActivity : AppCompatActivity() {
 
         // SEARCH
         binding.searchJob.setOnQueryTextListener(
-            object : SearchView.OnQueryTextListener {
+            object : android.widget.SearchView.OnQueryTextListener {
 
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return false
@@ -63,12 +72,25 @@ class CompanyActivity : AppCompatActivity() {
 
                 override fun onQueryTextChange(newText: String?): Boolean {
 
-                    val filteredList = allCompanies.filter {
-                        it.title.contains(
-                            newText ?: "",
-                            ignoreCase = true
-                        )
-                    }
+                    val keyword = newText ?: ""
+                    val filteredList =
+                        allCompanies.filter { company ->
+
+                            company.title.contains(
+                                keyword,
+                                true
+                            )
+                                    ||
+                                    company.company.name.contains(
+                                        keyword,
+                                        true
+                                    )
+                                    ||
+                                    company.location.contains(
+                                        keyword,
+                                        true
+                                    )
+                        }
 
                     jobAdapter.updateList(
                         ArrayList(filteredList)
@@ -102,7 +124,7 @@ class CompanyActivity : AppCompatActivity() {
 
                     } else {
 
-                        val filtered =
+                        val filteredList =
                             allCompanies.filter { company ->
 
                                 company.types.any { type ->
@@ -115,7 +137,7 @@ class CompanyActivity : AppCompatActivity() {
                             }
 
                         jobAdapter.updateList(
-                            ArrayList(filtered)
+                            ArrayList(filteredList)
                         )
                     }
                 }
@@ -162,6 +184,63 @@ class CompanyActivity : AppCompatActivity() {
 //            }
 
     }
+
+    private fun loadCategories() {
+
+        binding.layoutCategory.removeAllViews()
+
+        val categorySet = mutableSetOf<String>()
+
+        allCompanies.forEach { company ->
+            company.types.forEach { type ->
+                categorySet.add(type.nameType)
+            }
+        }
+
+        categorySet.forEach { category ->
+
+            val textView = android.widget.TextView(this)
+
+            textView.text = category
+            textView.setPadding(40, 20, 40, 20)
+
+            val params =
+                LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+
+            params.marginEnd = 16
+            textView.layoutParams = params
+
+            textView.setBackgroundColor(
+                android.graphics.Color.parseColor("#AEE5F8")
+            )
+
+            textView.setOnClickListener {
+
+                val filteredList =
+                    allCompanies.filter { company ->
+
+                        company.types.any { type ->
+
+                            type.nameType.equals(
+                                category,
+                                ignoreCase = true
+                            )
+                        }
+                    }
+
+                jobAdapter.updateList(
+                    ArrayList(filteredList)
+                )
+            }
+
+            binding.layoutCategory.addView(textView)
+        }
+    }
+
+
     // ham lay filter
     private fun loadFilterFromApi() {
 
@@ -180,18 +259,19 @@ class CompanyActivity : AppCompatActivity() {
 
         filterList.addAll(typeSet.sorted())
 
-        val adapter = ArrayAdapter(
+        val spinnerAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
             filterList
         )
 
-        adapter.setDropDownViewResource(
+        spinnerAdapter.setDropDownViewResource(
             android.R.layout.simple_spinner_dropdown_item
         )
 
-        binding.spFilter.adapter = adapter
+        binding.spFilter.adapter = spinnerAdapter
     }
+
         //B3:Viết hàm xử lý dữ liệu:
         private fun getCompanies(companies: ArrayList<Company> ) {
             //B1: Xóa dữ liệu cũ
@@ -216,9 +296,12 @@ class CompanyActivity : AppCompatActivity() {
                         companyList?.companyList?.let {
                             companies.clear()
                             companies.addAll(it)
+
                             allCompanies.clear()
                             allCompanies.addAll(it)
+
                             loadFilterFromApi()
+                            loadCategories()
                         }
                         //Báo cho ListView cập nhật lại dữ liệu
                         jobAdapter.notifyDataSetChanged()

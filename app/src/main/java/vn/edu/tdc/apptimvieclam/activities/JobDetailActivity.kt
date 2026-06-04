@@ -8,6 +8,7 @@ import androidx.core.text.HtmlCompat
 import com.bumptech.glide.Glide
 import vn.edu.tdc.apptimvieclam.databinding.JobDetailLayoutBinding
 import vn.edu.tdc.apptimvieclam.models.Company
+import com.google.firebase.database.FirebaseDatabase
 
 class JobDetailActivity : AppCompatActivity() {
 
@@ -17,10 +18,55 @@ class JobDetailActivity : AppCompatActivity() {
         binding=JobDetailLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val company = intent.getSerializableExtra("JOB") as? Company
-        if(company != null){
+
+        if (company != null) {
             loadData(company)
         }
 
+        binding.btnApplyNow.setOnClickListener {
+            applyJob(company)
+        }
+
+    }
+
+    // ham apply job
+    private fun applyJob(company: Company?) {
+
+        if (company == null) return
+
+        val database = FirebaseDatabase.getInstance()
+        val applicationsRef = database.getReference("applications")
+
+        val applicationId = applicationsRef.push().key
+
+        val applicationData = hashMapOf(
+            "jobTitle" to company.title,
+            "companyName" to company.company.name,
+            "location" to company.location,
+            "status" to "Pending"
+        )
+
+        if (applicationId != null) {
+            applicationsRef.child(applicationId)
+                .setValue(applicationData)
+                .addOnSuccessListener {
+
+                    android.widget.Toast.makeText(
+                        this,
+                        "Ứng tuyển thành công",
+                        android.widget.Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+                .addOnFailureListener {
+
+                    android.widget.Toast.makeText(
+                        this,
+                        "Ứng tuyển thất bại",
+                        android.widget.Toast.LENGTH_SHORT
+                    ).show()
+                }
+        }
     }
 
     private fun loadData(company: Company){
