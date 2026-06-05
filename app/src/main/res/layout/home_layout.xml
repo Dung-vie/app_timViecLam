@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:paddingTop="20dp"
     android:paddingHorizontal="7dp"
-    tools:context=".activities.CompanyActivity">
+    tools:context=".activities.HomeActivity">
 
 <!--    <Spinner-->
 <!--        android:id="@+id/spincities"-->
@@ -135,113 +135,9 @@
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <!-- Bottom Menu -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:orientation="horizontal"
-        android:background="#FFFFFF"
-        android:padding="8dp"
-        android:gravity="center">
-
-        <LinearLayout
-            android:id="@+id/menuHome"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:src="@drawable/ic_home"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/home"/>
-        </LinearLayout>
-
-        <!-- Search -->
-        <LinearLayout
-            android:id="@+id/menuSearch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@android:drawable/ic_search_category_default"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/search"/>
-        </LinearLayout>
-
-        <!-- Nút giữa -->
-        <LinearLayout
-            android:id="@+id/menuAdd"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/bg_circle_primary"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="+"
-                android:textColor="#000"
-                android:textSize="28sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-        <!-- Saved -->
-        <LinearLayout
-            android:id="@+id/menuSaved"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@android:drawable/ic_menu_save"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/saved"/>
-        </LinearLayout>
-
-        <!-- Setting -->
-        <LinearLayout
-            android:id="@+id/menuSetting"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@android:drawable/ic_menu_info_details"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cài đặt"/>
-        </LinearLayout>
-
-    </LinearLayout>
+    <include
+        android:id="@+id/bottomMenu"
+        layout="@layout/bottom_menu"/>
 
 
 </LinearLayout>

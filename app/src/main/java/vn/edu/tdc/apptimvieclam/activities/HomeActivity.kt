@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
@@ -14,7 +13,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import vn.edu.tdc.apptimvieclam.R
 import vn.edu.tdc.apptimvieclam.databinding.HomeLayoutBinding
 import vn.edu.tdc.apptimvieclam.models.Company
 import vn.edu.tdc.apptimvieclam.models.CompanyAPI
@@ -22,12 +20,12 @@ import vn.edu.tdc.apptimvieclam.models.CompanyList
 import androidx.recyclerview.widget.LinearLayoutManager
 import vn.edu.tdc.apptimvieclam.adapters.JobAdapter
 import android.widget.SearchView
+import vn.edu.tdc.apptimvieclam.R
 
-class CompanyActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
     private lateinit var binding: HomeLayoutBinding
     private lateinit var companies: ArrayList<Company>
     private lateinit var jobAdapter: JobAdapter
-    private lateinit var city: String
     private lateinit var companyAPI: CompanyAPI
 
     private lateinit var allCompanies: ArrayList<Company>
@@ -36,6 +34,31 @@ class CompanyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = HomeLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.bottomMenu.menuHome.setBackgroundResource(
+            R.drawable.bg_menu_selected
+        )
+
+        binding.bottomMenu.menuSearch.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+
+            finish()
+        }
+
+        binding.bottomMenu.menuSaved.setOnClickListener {
+            val intent = Intent(this, SavedActivity::class.java)
+            startActivity(intent)
+
+            finish()
+        }
+
+        binding.bottomMenu.menuSetting.setOnClickListener {
+            val intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+
+            finish()
+        }
 
         companies = ArrayList()
         allCompanies = ArrayList()
@@ -56,24 +79,20 @@ class CompanyActivity : AppCompatActivity() {
         // SEARCH
         binding.searchJob.setOnQueryTextListener(
             object : SearchView.OnQueryTextListener {
-
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return false
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-
                     val filteredList = allCompanies.filter {
                         it.title.contains(
                             newText ?: "",
                             ignoreCase = true
                         )
                     }
-
                     jobAdapter.updateList(
                         ArrayList(filteredList)
                     )
-
                     return true
                 }
             }
@@ -164,16 +183,11 @@ class CompanyActivity : AppCompatActivity() {
     }
     // ham lay filter
     private fun loadFilterFromApi() {
-
         val filterList = ArrayList<String>()
         filterList.add("Tất cả")
-
         val typeSet = mutableSetOf<String>()
-
         allCompanies.forEach { company ->
-
             company.types.forEach { type ->
-
                 typeSet.add(type.nameType)
             }
         }

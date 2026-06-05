@@ -17,36 +17,36 @@
 
 
         <activity
-            android:name=".activities.JobDetailActivity" />
-        <activity
-            android:name=".activities.ForgotPasswordActivity"
-            android:exported="false"/>
-        <!-- Login Activity -->
-        <activity
             android:name=".activities.LoginActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.HomeActivity"
+            android:exported="true">
 
         </activity>
-
-        <!-- Register Activity -->
         <activity
             android:name=".activities.RegisterActivity"
             android:exported="true" />
-
-        <!-- Company Activity -->
-        <!--
         <activity
-            android:name=".activities.CompanyActivity"
-            android:exported="true">
-        </activity>
-        -->
-
+            android:name=".activities.JobDetailActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".activities.ForgotPasswordActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".activities.SavedActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".activities.SearchActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".activities.SettingActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

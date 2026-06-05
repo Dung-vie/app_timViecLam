@@ -4,15 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.database
 import vn.edu.tdc.apptimvieclam.databinding.LoginLayoutBinding
 
 class LoginActivity : AppCompatActivity() {
 
-    // View Binding
     private lateinit var binding: LoginLayoutBinding
 
-    // Firebase
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,6 @@ class LoginActivity : AppCompatActivity() {
 
             // Validate Email
             if (email.isEmpty()) {
-
                 binding.edtEmail.error = "Vui lòng nhập email"
                 binding.edtEmail.requestFocus()
                 return@setOnClickListener
@@ -43,7 +42,6 @@ class LoginActivity : AppCompatActivity() {
 
             // Validate Password
             if (password.isEmpty()) {
-
                 binding.edtPassword.error = "Vui lòng nhập mật khẩu"
                 binding.edtPassword.requestFocus()
                 return@setOnClickListener
@@ -54,19 +52,45 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
 
                     if (task.isSuccessful) {
+                        val uid = auth.currentUser!!.uid
 
-                        Toast.makeText(
-                            this,
-                            "Đăng nhập thành công",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Firebase.database.getReference("users")
+                            .child(uid)
+                            .get()
+                            .addOnSuccessListener { snapshot ->
 
-                        // Chuyển sang HomeActivity
-                        // startActivity(Intent(this, HomeActivity::class.java))
-                        // finish()
+                                val role = snapshot.child("role").getValue(String::class.java)
+
+                                val status = snapshot.child("status").getValue(String::class.java)
+
+                                if (role == "ADMIN") {
+//                                    val intent = Intent(this, HomeActivity::class.java)
+//                                    startActivity(intent)
+//
+//                                    finish()
+                                } else if (role == "USER") {
+                                    val intent = Intent(this, HomeActivity::class.java)
+                                    startActivity(intent)
+
+                                    finish()
+
+                                } else if (role == "EMPLOYER") {
+                                    if (status == "ACTIVE") {
+                                        val intent = Intent(this, HomeActivity::class.java)
+                                        startActivity(intent)
+                                        finish()
+                                    } else {
+                                        Toast.makeText(
+                                            this,
+                                            "Tài khoản đang chờ duyệt",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                        auth.signOut()
+                                    }
+                                }
+                            }
 
                     } else {
-
                         Toast.makeText(
                             this,
                             "Sai email hoặc mật khẩu",
@@ -74,7 +98,7 @@ class LoginActivity : AppCompatActivity() {
                         ).show()
                     }
                 }
-        }
+         }
 
         // =========================
         // SIGN UP

@@ -22,29 +22,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Welcome Back"
+            android:text="App tìm việc làm"
             android:textColor="#18005C"
             android:textSize="34sp"
             android:textStyle="bold" />
 
-        <!-- Subtitle -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="14dp"
-            android:gravity="center"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
-            android:textColor="#7A7693"
-            android:textSize="14sp"
-            android:lineSpacingExtra="3dp" />
 
         <!-- Email -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
-            android:text="Email"
+            android:text="@string/txt_email"
             android:textColor="#18005C"
             android:textStyle="bold"
             android:textSize="14sp" />
@@ -55,7 +44,7 @@
             android:layout_height="56dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/bg_edittext"
-            android:hint="Brandonelouis@gmail.com"
+            android:hint="@string/hintEmail"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:textColor="#18005C"
@@ -67,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Password"
+            android:text="@string/txtPass"
             android:textColor="#18005C"
             android:textStyle="bold"
             android:textSize="14sp" />
@@ -85,7 +74,7 @@
                 android:layout_height="match_parent"
                 android:layout_toStartOf="@id/imgEye"
                 android:background="@android:color/transparent"
-                android:hint="••••••••••"
+                android:hint="@string/hintPass"
                 android:paddingStart="16dp"
                 android:textColor="#18005C"
                 android:textColorHint="#9B97B0"
@@ -110,19 +99,6 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/cbRemember"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="#D9CFFF" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Remember me"
-                android:textColor="#B1ACCA"
-                android:textSize="14sp" />
-
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -133,7 +109,7 @@
                 android:id="@+id/txtForgotPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Forgot Password?"
+                android:text="@string/txtForgotPass"
                 android:textColor="#6C63FF"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -145,7 +121,7 @@
             android:layout_height="58dp"
             android:layout_marginTop="28dp"
             android:background="@drawable/bg_button"
-            android:text="LOGIN"
+            android:text="@string/txtLogin"
             android:textAllCaps="true"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
@@ -170,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="SIGN IN WITH GOOGLE"
+                android:text="@string/txtLoginGG"
                 android:textColor="#18005C"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -187,7 +163,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="You don't have an account yet? "
+                android:text="@string/txtCCMK"
                 android:textColor="#7A7693"
                 android:textSize="14sp" />
 
@@ -195,7 +171,7 @@
                 android:id="@+id/txtSignUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign up"
+                android:text="@string/txtRegister"
                 android:textColor="#FF8C42"
                 android:textStyle="bold"
                 android:textSize="14sp" />

@@ -5,21 +5,19 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.database
 import vn.edu.tdc.apptimvieclam.databinding.RegisterLayoutBinding
 
 class RegisterActivity : AppCompatActivity() {
-
-    // View Binding
     private lateinit var binding: RegisterLayoutBinding
 
-    // Firebase
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Binding
         binding = RegisterLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -33,8 +31,14 @@ class RegisterActivity : AppCompatActivity() {
 
             val email = binding.edtEmail.text.toString().trim()
             val password = binding.edtPassword.text.toString().trim()
-            val confirmPassword =
-                binding.edtConfirmPassword.text.toString().trim()
+            val confirmPassword = binding.edtConfirmPassword.text.toString().trim()
+            val selectedRole = binding.rgRole.checkedRadioButtonId
+            var role = ""
+            if (selectedRole == binding.rbUser.id) {
+                role = "USER"
+            } else if (selectedRole == binding.rbEmployer.id) {
+                role = "EMPLOYER"
+            }
 
             // Validate Email
             if (email.isEmpty()) {
@@ -87,32 +91,59 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            //Check role
+            if (role.isEmpty()) {
+
+                Toast.makeText(
+                    this,
+                    "Vui lòng chọn vai trò",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                return@setOnClickListener
+            }
+
             // Firebase Register
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
 
                     if (task.isSuccessful) {
+                        val uid = auth.currentUser!!.uid
 
-                        Toast.makeText(
-                            this,
-                            "Đăng ký thành công",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        val database = Firebase.database
 
-                        // Chuyển sang Login
-                        val intent = Intent(
-                            this,
-                            LoginActivity::class.java
+                        val userData = hashMapOf(
+                            "uid" to uid,
+                            "email" to email,
+                            "role" to role,
+                            "status" to if (role == "EMPLOYER")
+                                "PENDING"
+                            else
+                                "ACTIVE"
                         )
 
-                        startActivity(intent)
+                        database.getReference("users")
+                            .child(uid)
+                            .setValue(userData)
+                            .addOnSuccessListener {
 
-                        overridePendingTransition(
-                            android.R.anim.fade_in,
-                            android.R.anim.fade_out
-                        )
+                                Toast.makeText(
+                                    this,
+                                    "Đăng ký thành công",
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
-                        finish()
+                                val intent = Intent(this, LoginActivity::class.java)
+                                startActivity(intent)
+
+                                overridePendingTransition(
+                                    android.R.anim.fade_in,
+                                    android.R.anim.fade_out
+                                )
+                                finish()
+                            }
+
+
 
                     } else {
 
@@ -125,15 +156,10 @@ class RegisterActivity : AppCompatActivity() {
                 }
         }
 
-        // =========================
         // CHUYỂN SANG LOGIN
-        // =========================
         binding.txtSignIn.setOnClickListener {
 
-            val intent = Intent(
-                this,
-                LoginActivity::class.java
-            )
+            val intent = Intent(this, LoginActivity::class.java)
 
             startActivity(intent)
 
@@ -143,24 +169,6 @@ class RegisterActivity : AppCompatActivity() {
             )
 
             finish()
-        }
-
-        // =========================
-        // FORGOT PASSWORD
-        // =========================
-        binding.txtForgotPassword.setOnClickListener {
-
-            val intent = Intent(
-                this,
-                ForgotPasswordActivity::class.java
-            )
-
-            startActivity(intent)
-
-            overridePendingTransition(
-                android.R.anim.fade_in,
-                android.R.anim.fade_out
-            )
         }
     }
 }
