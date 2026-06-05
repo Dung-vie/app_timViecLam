@@ -63,7 +63,10 @@ class HomeActivity : AppCompatActivity() {
         companies = ArrayList()
         allCompanies = ArrayList()
         // tạo adapter trước
-        jobAdapter = JobAdapter(companies)
+        jobAdapter = JobAdapter(companies)  { company ->
+            val intent = Intent(this, JobDetailActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.rvJobs.layoutManager =
             LinearLayoutManager(this)
@@ -114,18 +117,14 @@ class HomeActivity : AppCompatActivity() {
                             .toString()
 
                     if (selected == "Tất cả") {
-
                         jobAdapter.updateList(
                             ArrayList(allCompanies)
                         )
 
                     } else {
-
                         val filtered =
                             allCompanies.filter { company ->
-
                                 company.types.any { type ->
-
                                     type.nameType.equals(
                                         selected,
                                         ignoreCase = true

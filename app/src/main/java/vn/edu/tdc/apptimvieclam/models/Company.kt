@@ -1,6 +1,5 @@
     package vn.edu.tdc.apptimvieclam.models
 
-    import android.accessibilityservice.GestureDescription
     import com.google.gson.annotations.SerializedName
     import java.io.Serializable
 
