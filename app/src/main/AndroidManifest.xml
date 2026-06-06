@@ -15,7 +15,8 @@
         android:theme="@style/Theme.AppTimViecLam"
         tools:targetApi="31">
 
-
+        <activity android:name=".activities.UpdatePasswordActivity"
+            android:exported="true"/>
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true">
@@ -47,6 +48,7 @@
         <activity
             android:name=".activities.SettingActivity"
             android:exported="true"/>
+
     </application>
 
 </manifest>

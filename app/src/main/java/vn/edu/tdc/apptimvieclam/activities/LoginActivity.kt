@@ -24,7 +24,12 @@ class LoginActivity : AppCompatActivity() {
 
         // Firebase
         auth = FirebaseAuth.getInstance()
-
+        // Nếu đã đăng nhập thì vào Home luôn
+        if (auth.currentUser != null) {
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
+            return
+        }
         // =========================
         // LOGIN FIREBASE
         // =========================
