@@ -14,6 +14,11 @@ class SavedActivity : AppCompatActivity() {
         binding = SavedLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        playMenu()
+
+    }
+
+    private fun playMenu() {
         binding.bottomMenu.menuSaved.setBackgroundResource(
             R.drawable.bg_menu_selected
         )
@@ -38,6 +43,6 @@ class SavedActivity : AppCompatActivity() {
 
             finish()
         }
-
     }
+
 }

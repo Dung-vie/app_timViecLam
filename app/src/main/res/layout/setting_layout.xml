@@ -29,15 +29,16 @@
         android:layout_margin="24dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:layout_constraintTop_toBottomOf="@id/txtTitle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/txtTitle">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="50dp">
 
             <!-- Notifications -->
             <LinearLayout
@@ -50,46 +51,46 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingVertical="7dp"
-                    android:gravity="center"
                     android:background="#B3008013"
+                    android:gravity="center"
+                    android:paddingVertical="7dp"
                     android:text="@string/notify"
                     android:textColor="@color/white"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
                 <Switch
                     android:id="@+id/switchNoti"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:checked="false"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:layout_margin="10dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingVertical="7dp"
-                    android:gravity="center"
                     android:background="#67000000"
-                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:paddingVertical="7dp"
                     android:text="Giao diện tối"
-                    android:textSize="17sp"/>
+                    android:textColor="@color/white"
+                    android:textSize="17sp" />
 
                 <Switch
                     android:id="@+id/switchDark"
-                    android:checked="false"
-                    android:layout_marginLeft="5dp"
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:checked="false"
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
             </LinearLayout>
 
@@ -107,9 +108,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:text="Cập nhật mật khẩu"
-                    android:textSize="16sp"
                     android:textAllCaps="false"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -125,11 +126,11 @@
                     android:id="@+id/btnSetting"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:backgroundTint="#18005C"
                     android:text="Thông tin tài khoản"
                     android:textAllCaps="false"
-                    android:textSize="16sp"
-                    android:backgroundTint="#18005C"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -138,11 +139,11 @@
                 android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="@string/txtLogout"
                 android:layout_margin="10dp"
-                android:textSize="16sp"
                 android:backgroundTint="#E53935"
-                android:textColor="#FFFFFF"/>
+                android:text="@string/txtLogout"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
         </LinearLayout>
 

@@ -43,6 +43,9 @@
     <string name="rbEmployer">Nhà tuyển dụng</string>
     <string name="txtLogout">Đăng xuất</string>
     <string name="txtKhamPha">Khám phá việc làm</string>
+    <string name="cityHiglight">Các công ty nổi bật</string>
+    <string name="txtName">Dũng Hoàng</string>
+    <string name="txtHelo">Hello,</string>
     <string-array name="quick_filters">
         <item>Remote</item>
         <item>Lương cao</item>

@@ -35,30 +35,7 @@ class SearchActivity : AppCompatActivity() {
         binding = SearchLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottomMenu.menuSearch.setBackgroundResource(
-            R.drawable.bg_menu_selected
-        )
-
-        binding.bottomMenu.menuHome.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
-
-            finish()
-        }
-
-        binding.bottomMenu.menuSaved.setOnClickListener {
-            val intent = Intent(this, SavedActivity::class.java)
-            startActivity(intent)
-
-            finish()
-        }
-
-        binding.bottomMenu.menuSetting.setOnClickListener {
-            val intent = Intent(this, SettingActivity::class.java)
-            startActivity(intent)
-
-            finish()
-        }
+        playMenu()
 
         companies = ArrayList()
         allCompanies = ArrayList()
@@ -148,6 +125,34 @@ class SearchActivity : AppCompatActivity() {
 
         getCompanies(companies)
     }
+
+    private fun playMenu() {
+        binding.bottomMenu.menuSearch.setBackgroundResource(
+            R.drawable.bg_menu_selected
+        )
+
+        binding.bottomMenu.menuHome.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+
+            finish()
+        }
+
+        binding.bottomMenu.menuSaved.setOnClickListener {
+            val intent = Intent(this, SavedActivity::class.java)
+            startActivity(intent)
+
+            finish()
+        }
+
+        binding.bottomMenu.menuSetting.setOnClickListener {
+            val intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+
+            finish()
+        }
+    }
+
 
     // ham lay filter
     private fun loadFilterFromApi() {
