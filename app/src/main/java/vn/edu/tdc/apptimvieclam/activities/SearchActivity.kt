@@ -2,6 +2,7 @@ package vn.edu.tdc.apptimvieclam.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -64,6 +65,7 @@ class SearchActivity : AppCompatActivity() {
         // tạo adapter trước
         jobAdapter = JobAdapter(companies) { company ->
             val intent = Intent(this, JobDetailActivity::class.java)
+            intent.putExtra("JOB", company)
             startActivity(intent)
         }
 
@@ -192,6 +194,12 @@ class SearchActivity : AppCompatActivity() {
                 //Nếu có dữ liệu mới xử lí
                 if (result.isSuccessful) {
                     val companyList = result.body()
+
+                    Log.d("API_CODE", result.code().toString())
+
+                    if(result.isSuccessful){
+                        Log.d("API_SUCCESS", result.body().toString())
+                    }
                     //Xư lí nullable
                     companyList?.companyList?.let {
                         companies.clear()
@@ -206,6 +214,7 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onFailure(p0: Call<CompanyList>, p1: Throwable) {
+                Log.e("API_ERROR", p1.message.toString())
             }
         })
     }

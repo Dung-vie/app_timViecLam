@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import vn.edu.tdc.apptimvieclam.adapters.JobAdapter
 import android.widget.SearchView
 import vn.edu.tdc.apptimvieclam.R
+import vn.edu.tdc.apptimvieclam.databinding.ItemFilterLayoutBinding
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: HomeLayoutBinding
@@ -34,6 +35,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = HomeLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        loadQuickFilters()
 
         binding.bottomMenu.menuHome.setBackgroundResource(
             R.drawable.bg_menu_selected
@@ -60,92 +63,7 @@ class HomeActivity : AppCompatActivity() {
             finish()
         }
 
-        companies = ArrayList()
-        allCompanies = ArrayList()
-        // tạo adapter trước
-        jobAdapter = JobAdapter(companies)  { company ->
-            val intent = Intent(this, JobDetailActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.rvJobs.layoutManager =
-            LinearLayoutManager(this)
-        // rồi mới gán vào ListView
-        binding.rvJobs.adapter = jobAdapter
-
-        //Test firebase
-        val database = Firebase.database
-        val myRef = database.getReference("message") //key
-        myRef.setValue("Hello, DUNG!") //value
-        //ket thuc test
-
-        // SEARCH
-        binding.searchJob.setOnQueryTextListener(
-            object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    return false
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    val filteredList = allCompanies.filter {
-                        it.title.contains(
-                            newText ?: "",
-                            ignoreCase = true
-                        )
-                    }
-                    jobAdapter.updateList(
-                        ArrayList(filteredList)
-                    )
-                    return true
-                }
-            }
-        )
-
-        //Filter
-        binding.spFilter.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-
-                    val selected =
-                        parent?.getItemAtPosition(position)
-                            .toString()
-
-                    if (selected == "Tất cả") {
-                        jobAdapter.updateList(
-                            ArrayList(allCompanies)
-                        )
-
-                    } else {
-                        val filtered =
-                            allCompanies.filter { company ->
-                                company.types.any { type ->
-                                    type.nameType.equals(
-                                        selected,
-                                        ignoreCase = true
-                                    )
-                                }
-                            }
-
-                        jobAdapter.updateList(
-                            ArrayList(filtered)
-                        )
-                    }
-                }
-
-                override fun onNothingSelected(
-                    parent: AdapterView<*>?
-                ) {
-                }
-            }
-
-
-        getCompanies(companies)
+//        getCompanies(companies)
 
 
 
@@ -203,8 +121,38 @@ class HomeActivity : AppCompatActivity() {
             android.R.layout.simple_spinner_dropdown_item
         )
 
-        binding.spFilter.adapter = adapter
+//        binding.spFilter.adapter = adapter
     }
+
+    private fun loadQuickFilters() {
+
+        val filters = resources.getStringArray(
+                R.array.quick_filters
+            )
+
+        filters.forEach { filter ->
+
+            val itemBinding = ItemFilterLayoutBinding.inflate(
+                    layoutInflater,
+                    binding.layoutQuickFilter,
+                    false
+                )
+
+            itemBinding.txtFilter.text = filter
+
+            itemBinding.root.setOnClickListener {
+                val intent = Intent(this, SearchActivity::class.java)
+                intent.putExtra("FILTER", filter)
+
+                startActivity(intent)
+            }
+
+            binding.layoutQuickFilter.addView(
+                itemBinding.root
+            )
+        }
+    }
+
         //B3:Viết hàm xử lý dữ liệu:
         private fun getCompanies(companies: ArrayList<Company> ) {
             //B1: Xóa dữ liệu cũ

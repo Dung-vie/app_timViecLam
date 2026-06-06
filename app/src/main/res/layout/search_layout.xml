@@ -17,11 +17,15 @@
         android:gravity="center"
         android:layout_marginTop="15dp"/>
 
-    <SearchView
+
+    <android.widget.SearchView
         android:id="@+id/searchJob"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Tìm việc làm..." />
+        android:background="@drawable/bg_main_card"
+        android:queryHint="Tìm việc ngay..."
+        android:iconifiedByDefault="false"/>
+
 
     <Spinner
         android:id="@+id/spFilter"

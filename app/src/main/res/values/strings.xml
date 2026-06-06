@@ -41,10 +41,14 @@
     <string name="txtLocationSeed">Ba Đình, Hà Nội. Việt Nam</string>
     <string name="rbUser">Người tìm việc</string>
     <string name="rbEmployer">Nhà tuyển dụng</string>
-    <array name="cities">
-        <item>HoChiMinh</item>
-        <item>HaNoi</item>
-        <item>Hue</item>
-        <item>Hai Phong</item>
-    </array>
+    <string name="txtLogout">Đăng xuất</string>
+    <string name="txtKhamPha">Khám phá việc làm</string>
+    <string-array name="quick_filters">
+        <item>Remote</item>
+        <item>Lương cao</item>
+        <item>Full-time</item>
+        <item>TP.HCM</item>
+        <item>Hà Nội</item>
+        <item>Mới đăng</item>
+    </string-array>
 </resources>

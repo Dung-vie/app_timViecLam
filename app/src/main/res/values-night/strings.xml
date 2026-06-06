@@ -39,4 +39,6 @@
     <string name="txtLocationSeed">Ba Đình, Hà Nội. Việt Nam</string>
     <string name="rbUser">Người tìm việc</string>
     <string name="rbEmployer">Nhà tuyển dụng</string>
+    <string name="txtLogout">Đăng xuất</string>
+    <string name="txtKhamPha">Khám phá việc làm</string>
 </resources>

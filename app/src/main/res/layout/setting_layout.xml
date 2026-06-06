@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F7F7FA">
@@ -38,38 +39,108 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <!-- Cập nhật mật khẩu -->
-            <Button
-                android:id="@+id/btnUpdatePassword"
+            <!-- Notifications -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Cập nhật mật khẩu"
-                android:textAllCaps="false"
-                android:textStyle="bold"
-                android:backgroundTint="#18005C"
-                android:textColor="#FFFFFF"/>
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingVertical="7dp"
+                    android:gravity="center"
+                    android:background="#B3008013"
+                    android:text="@string/notify"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"/>
+
+                <Switch
+                    android:id="@+id/switchNoti"
+                    android:layout_marginLeft="5dp"
+                    android:checked="false"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingVertical="7dp"
+                    android:gravity="center"
+                    android:background="#67000000"
+                    android:textColor="@color/white"
+                    android:text="Giao diện tối"
+                    android:textSize="17sp"/>
+
+                <Switch
+                    android:id="@+id/switchDark"
+                    android:checked="false"
+                    android:layout_marginLeft="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+            </LinearLayout>
+
+
+            <!-- Cập nhật mật khẩu -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnUpdatePassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Cập nhật mật khẩu"
+                    android:textSize="16sp"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"/>
+
+            </LinearLayout>
 
             <!-- Cài đặt -->
-            <Button
-                android:id="@+id/btnSetting"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="12dp"
-                android:text="Thông tin tài khoản"
-                android:textAllCaps="false"
-                android:textStyle="bold"
-                android:backgroundTint="#6C63FF"
-                android:textColor="#FFFFFF"/>
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnSetting"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Thông tin tài khoản"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:backgroundTint="#18005C"
+                    android:textColor="#FFFFFF"/>
+
+            </LinearLayout>
 
             <!-- Đăng xuất -->
             <Button
                 android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="12dp"
-                android:text="Đăng xuất"
-                android:textAllCaps="false"
-                android:textStyle="bold"
+                android:text="@string/txtLogout"
+                android:layout_margin="10dp"
+                android:textSize="16sp"
                 android:backgroundTint="#E53935"
                 android:textColor="#FFFFFF"/>
 

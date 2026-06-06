@@ -28,7 +28,7 @@ class RegisterActivity : AppCompatActivity() {
         // ĐĂNG KÝ FIREBASE
         // =========================
         binding.btnRegister.setOnClickListener {
-
+            val name = binding.edtFullName.text.toString().trim()
             val email = binding.edtEmail.text.toString().trim()
             val password = binding.edtPassword.text.toString().trim()
             val confirmPassword = binding.edtConfirmPassword.text.toString().trim()
@@ -114,6 +114,7 @@ class RegisterActivity : AppCompatActivity() {
 
                         val userData = hashMapOf(
                             "uid" to uid,
+                            "name" to name,
                             "email" to email,
                             "role" to role,
                             "status" to if (role == "EMPLOYER")
