@@ -4,6 +4,8 @@
     import java.io.Serializable
 
     class Company : Serializable {
+        @SerializedName("id") // Hoặc thay bằng đúng tên trường ID mà API của bạn trả về (ví dụ: "job_id")
+        var id: String = ""
         @SerializedName("title")
         var title: String
 

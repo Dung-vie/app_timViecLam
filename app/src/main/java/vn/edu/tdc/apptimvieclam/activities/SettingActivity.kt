@@ -2,7 +2,6 @@ package vn.edu.tdc.apptimvieclam.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import vn.edu.tdc.apptimvieclam.R
@@ -18,9 +17,14 @@ class SettingActivity : AppCompatActivity() {
 
         playMenu()
 
+        // Mở màn hình Lịch sử ứng tuyển (Công việc đã nộp)
+        binding.txtAppliedJobs.setOnClickListener {
+            val intent = Intent(this, AppliedJobsActivity::class.java)
+            startActivity(intent)
+        }
+
         // Chuyển sang màn hình đổi mật khẩu
         binding.txtUpdatePass.setOnClickListener {
-
             startActivity(
                 Intent(
                     this,
@@ -31,16 +35,13 @@ class SettingActivity : AppCompatActivity() {
 
         // Đăng xuất
         binding.btnLogout.setOnClickListener {
-
             FirebaseAuth.getInstance().signOut()
-
             startActivity(
                 Intent(
                     this,
                     LoginActivity::class.java
                 )
             )
-
             finish()
         }
     }
@@ -53,23 +54,19 @@ class SettingActivity : AppCompatActivity() {
         binding.bottomMenu.menuSearch.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
-
             finish()
         }
 
         binding.bottomMenu.menuSaved.setOnClickListener {
             val intent = Intent(this, SavedActivity::class.java)
             startActivity(intent)
-
             finish()
         }
 
         binding.bottomMenu.menuHome.setOnClickListener {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
-
             finish()
         }
-
     }
 }

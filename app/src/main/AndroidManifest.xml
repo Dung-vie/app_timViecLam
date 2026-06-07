@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTimViecLam"
         tools:targetApi="31">
-
+        <activity android:name=".activities.AppliedJobsActivity"
+            android:exported="false"/>
         <activity android:name=".activities.UpdatePasswordActivity"
             android:exported="true"/>
         <activity

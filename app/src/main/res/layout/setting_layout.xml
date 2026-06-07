@@ -66,7 +66,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- Notification row -->
                 <LinearLayout
                     android:id="@+id/rowNotification"
                     android:layout_width="match_parent"
@@ -76,7 +75,6 @@
                     android:orientation="horizontal"
                     android:padding="16dp">
 
-                    <!-- Icon bg -->
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="36dp"
                         android:layout_height="36dp"
@@ -125,14 +123,12 @@
 
                 </LinearLayout>
 
-                <!-- Divider -->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:layout_marginStart="64dp"
                     android:background="#1A000000" />
 
-                <!-- Dark mode row -->
                 <LinearLayout
                     android:id="@+id/rowDarkMode"
                     android:layout_width="match_parent"
@@ -199,6 +195,61 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginBottom="8dp"
+            android:text="QUẢN LÝ ỨNG TUYỂN"
+            android:textColor="#534AB7"
+            android:textSize="11sp"
+            android:letterSpacing="0.1"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:id="@+id/txtAppliedJobs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Công việc đã nộp"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Xem lịch sử và trạng thái ứng tuyển"
+                        android:textColor="#888780"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="8dp"
             android:text="BẢO MẬT &amp; TÀI KHOẢN"
             android:textColor="#534AB7"
             android:textSize="11sp"
@@ -223,11 +274,10 @@
                     android:id="@+id/txtInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="16dp">
-
-
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -253,7 +303,6 @@
 
                     </LinearLayout>
 
-
                 </LinearLayout>
 
                 <View
@@ -266,10 +315,10 @@
                     android:id="@+id/txtUpdatePass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="16dp">
-
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -320,7 +369,6 @@
             app:strokeWidth="0dp" />
 
     </LinearLayout>
-
 
     <include
         android:id="@+id/bottomMenu"
