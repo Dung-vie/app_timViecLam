@@ -5,14 +5,53 @@
     <string name="location">Vị trí</string>
     <string name="types">Chuyên ngành:</string>
     <string name="pulish">Ngày đăng</string>
-    <string name="read_more">Read more</string>
-    <string name="search">Tìm kiếm</string>
-    <string name="saved">Đã lưu</string>
+    <string name="read_more">Đọc thêm</string>
+    <string name="requirement">Yêu cầu</string>
+    <string name="position">Chức vụ</string>
+    <string name="typeJob">Loại công việc</string>
+    <string name="salary">Lương</string>
+    <string name="qualification">Trình độ chuyên môn</string>
+    <string name="experience">Kinh nghiệm</string>
+    <string name="orther">Cơ sở vật chất và những thứ khác</string>
     <string name="home">Trang chủ</string>
-    <array name="cities">
-        <item>HoChiMinh</item>
-        <item>HaNoi</item>
-        <item>Hue</item>
-        <item>Hai Phong</item>
-    </array>
+    <string name="saved">Đã lưu</string>
+    <string name="notify">Thông báo</string>
+    <string name="highlight">Các công việc nổi bật</string>
+    <string name="category">Danh mục</string>
+    <string name="txtBanner">Tìm công việc theo danh mục ngay</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="txtPass">Mật khẩu</string>
+    <string name="txt_email">Email</string>
+    <string name="hintEmail">aaa@gmail.com</string>
+    <string name="hintPass">••••••••••</string>
+    <string name="txtForgotPass">Bạn quên mật khẩu? </string>
+    <string name="txtLogin">Đăng nhập</string>
+    <string name="txtLoginGG">Đăng nhập với Google</string>
+    <string name="txtCCMK">Chưa có mật khẩu?</string>
+    <string name="txtRegister">Đăng ký ngay</string>
+    <string name="txtFullName">Full name</string>
+    <string name="edtFullName">Hoàng Hữu Dũng</string>
+    <string name="txtBDCTK">Bạn đã có tài khoản? </string>
+    <string name="txtForgotPass2">Nhập email để lấy lại mật khẩu</string>
+    <string name="btnForgotPass">Lấy lại mật khẩu</string>
+    <string name="txtUpdatePass">Cập nhật mật khẩu</string>
+    <string name="txtOldPass">Mật khẩu cũ</string>
+    <string name="txtDetailJob">Chi tiết công việc</string>
+    <string name="txtLorem">Lorem sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem ...</string>
+    <string name="txtLocationSeed">Ba Đình, Hà Nội. Việt Nam</string>
+    <string name="rbUser">Người tìm việc</string>
+    <string name="rbEmployer">Nhà tuyển dụng</string>
+    <string name="txtLogout">Đăng xuất</string>
+    <string name="txtKhamPha">Khám phá việc làm</string>
+    <string name="cityHiglight">Các công ty nổi bật</string>
+    <string name="txtName">Dũng Hoàng</string>
+    <string name="txtHelo">Hello,</string>
+    <string-array name="quick_filters">
+        <item>Remote</item>
+        <item>Lương cao</item>
+        <item>Full-time</item>
+        <item>TP.HCM</item>
+        <item>Hà Nội</item>
+        <item>Mới đăng</item>
+    </string-array>
 </resources>

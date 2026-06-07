@@ -49,6 +49,7 @@
                 <!-- Job Title -->
                 <TextView
                     android:id="@+id/tvJobTitle"
+                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -99,7 +100,7 @@
                         android:id="@+id/tvPublished"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1 day ago"
+                        android:text="1 ngày trước"
                         android:textColor="#888899"
                         android:textSize="13sp" />
 
@@ -131,7 +132,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Salary"
+                            android:text="@string/salary"
                             android:textStyle="bold"
                             android:textSize="14sp"/>
 
@@ -139,7 +140,7 @@
                             android:id="@+id/tvSalary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Negotiable"
+                            android:text="Thương lượng"
                             android:textSize="13sp"/>
                     </LinearLayout>
 
@@ -154,7 +155,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Job Type"
+                            android:text="@string/typeJob"
                             android:textStyle="bold"
                             android:textSize="14sp"/>
 
@@ -177,7 +178,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Position"
+                            android:text="@string/position"
                             android:textStyle="bold"
                             android:textSize="14sp"/>
 
@@ -212,7 +213,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Description"
+                    android:text="@string/txtDetailJob"
                     android:textColor="#1A1A2E"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -224,7 +225,7 @@
                     android:layout_marginTop="10dp"
                     android:ellipsize="end"
                     android:maxLines="4"
-                    android:text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem ..."
+                    android:text="@string/txtLorem"
                     android:textColor="#888899"
                     android:textSize="13sp"
                     android:lineSpacingExtra="4dp" />
@@ -262,7 +263,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Requirements"
+                    android:text="@string/requirement"
                     android:textColor="#1A1A2E"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -274,100 +275,17 @@
                     android:layout_marginTop="12dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="•"
-                        android:textColor="#6C63FF"
-                        android:textSize="16sp"
-                        android:paddingTop="0dp" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_marginStart="8dp"
-                        android:text="Sed ut perspiciatis unde omnis iste natus error sit."
+                        android:text="@string/txtLorem"
                         android:textColor="#888899"
                         android:textSize="13sp"
                         android:lineSpacingExtra="3dp" />
                 </LinearLayout>
-
-                <!-- Item 2 -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="•"
-                        android:textColor="#6C63FF"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="8dp"
-                        android:text="Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur &amp; adipisci velit."
-                        android:textColor="#888899"
-                        android:textSize="13sp"
-                        android:lineSpacingExtra="3dp" />
-                </LinearLayout>
-
-                <!-- Item 3 -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="•"
-                        android:textColor="#6C63FF"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="8dp"
-                        android:text="Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit."
-                        android:textColor="#888899"
-                        android:textSize="13sp"
-                        android:lineSpacingExtra="3dp" />
-                </LinearLayout>
-
-                <!-- Item 4 -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="•"
-                        android:textColor="#6C63FF"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="8dp"
-                        android:text="Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur."
-                        android:textColor="#888899"
-                        android:textSize="13sp"
-                        android:lineSpacingExtra="3dp" />
-                </LinearLayout>
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -389,7 +307,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Location"
+                    android:text="@string/location"
                     android:textColor="#1A1A2E"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -398,7 +316,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Overlook Avenue, Belleville, NJ, USA"
+                    android:text="@string/txtLocationSeed"
                     android:textColor="#888899"
                     android:textSize="13sp" />
 
@@ -447,7 +365,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Informations"
+                    android:text="Thông tin chi tiết"
                     android:textColor="#1A1A2E"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -457,7 +375,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Position"
+                    android:text="@string/position"
                     android:textColor="#1A1A2E"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -478,7 +396,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Qualification"
+                    android:text="@string/qualification"
                     android:textColor="#1A1A2E"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -499,7 +417,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Experience"
+                    android:text="@string/experience"
                     android:textColor="#1A1A2E"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -520,7 +438,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Job Type"
+                    android:text="@string/typeJob"
                     android:textColor="#1A1A2E"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -541,7 +459,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="Specialization"
+                    android:text="Chuyên môn"
                     android:textColor="#1A1A2E"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -575,7 +493,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Facilities and Others"
+                    android:text="@string/orther"
                     android:textColor="#1A1A2E"
                     android:textSize="16sp"
                     android:textStyle="bold" />
