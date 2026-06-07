@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.database
+import vn.edu.tdc.apptimvieclam.admin.activities.AdminDashboardActivity
 import vn.edu.tdc.apptimvieclam.databinding.LoginLayoutBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -69,10 +70,10 @@ class LoginActivity : AppCompatActivity() {
                                 val status = snapshot.child("status").getValue(String::class.java)
 
                                 if (role == "ADMIN") {
-//                                    val intent = Intent(this, HomeActivity::class.java)
-//                                    startActivity(intent)
-//
-//                                    finish()
+                                    val intent = Intent(this, AdminDashboardActivity::class.java)
+                                    startActivity(intent)
+
+                                    finish()
                                 } else if (role == "USER") {
                                     val intent = Intent(this, HomeActivity::class.java)
                                     startActivity(intent)

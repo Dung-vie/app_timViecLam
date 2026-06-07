@@ -55,6 +55,16 @@
             android:name=".activities.NotificationActivity"
             android:exported="true"/>
 
+        <activity
+            android:name=".admin.activities.AdminDashboardActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".admin.activities.ManageRecruiterActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".admin.activities.ManageJobsActivity"
+            android:exported="true"/>
+
     </application>
 
 </manifest>

@@ -30,6 +30,13 @@ class Company : Serializable {
 
     @SerializedName("experience_level")
     var experienceLevel: String
+
+    var jobId: String
+
+    var recruiterUid: String
+
+    var status: String = "pending"  // pending -> đang duyệt; approved -> đã phê duyệt
+
     constructor(
         title: String,
         location: String,
@@ -39,7 +46,10 @@ class Company : Serializable {
         description: String,
         salaryMin: Double?,
         salaryMax: Double?,
-        experienceLevel:String
+        experienceLevel: String,
+        jobId: String,
+        recruiterUid: String,
+        status: String
     ) {
         this.title = title
         this.location = location
@@ -47,10 +57,29 @@ class Company : Serializable {
         this.types = types
         this.publish = publish
         this.description = description
-        this.salaryMax = salaryMax
         this.salaryMin = salaryMin
+        this.salaryMax = salaryMax
         this.experienceLevel = experienceLevel
+        this.jobId = jobId
+        this.recruiterUid = recruiterUid
+        this.status = status
     }
+
+    constructor() {
+        this.title = ""
+        this.location = ""
+        this.company = CompanyItem("", "")
+        this.types = ArrayList()
+        this.publish = ""
+        this.description = ""
+        this.salaryMin = null
+        this.salaryMax = null
+        this.experienceLevel = ""
+        this.jobId = ""
+        this.recruiterUid = ""
+        this.status = ""
+    }
+
 
 
     class CompanyItem : Serializable {
@@ -64,6 +93,11 @@ class Company : Serializable {
             this.name = name
             this.image = image
         }
+
+        constructor() {
+            this.name = ""
+            this.image = ""
+        }
     }
 
     class Type: Serializable {
@@ -72,6 +106,9 @@ class Company : Serializable {
 
         constructor(nameType: String) {
             this.nameType = nameType
+        }
+        constructor() {
+            this.nameType = ""
         }
     }
 
