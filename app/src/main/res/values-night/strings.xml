@@ -44,4 +44,7 @@
     <string name="cityHiglight">Các công ty nổi bật</string>
     <string name="txtName">Dũng Hoàng</string>
     <string name="txtHelo">Hello,</string>
+    <string name="txtCreate">+</string>
+    <string name="txtSetting">Cài đặt</string>
+    <string name="txtReadAll">Đọc tất cả</string>
 </resources>

@@ -41,10 +41,11 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imgAvatar"
+            android:id="@+id/imgNotify"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_avatar"/>
+            android:background="@color/black"
+            android:src="@drawable/ic_bell"/>
 
     </LinearLayout>
 

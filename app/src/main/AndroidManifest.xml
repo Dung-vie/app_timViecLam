@@ -4,7 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
+        android:name=".aplication.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -47,6 +50,9 @@
             android:exported="true"/>
         <activity
             android:name=".activities.SettingActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".activities.NotificationActivity"
             android:exported="true"/>
 
     </application>

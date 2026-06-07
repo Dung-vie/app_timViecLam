@@ -72,6 +72,12 @@ class HomeActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.imgNotify.setOnClickListener {
+            val intent = Intent(this, NotificationActivity::class.java)
+            startActivity(intent)
+
+        }
+
     }
 
     private fun loadUserName() {
