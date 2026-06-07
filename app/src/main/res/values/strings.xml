@@ -5,6 +5,12 @@
     <string name="location">Vị trí</string>
     <string name="types">Chuyên ngành:</string>
     <string name="pulish">Ngày đăng</string>
+    <array name="cities">
+        <item>HoChiMinh</item>
+        <item>HaNoi</item>
+        <item>Hue</item>
+        <item>Hai Phong</item>
+    </array>
     <string name="read_more">Đọc thêm</string>
     <string name="requirement">Yêu cầu</string>
     <string name="position">Chức vụ</string>

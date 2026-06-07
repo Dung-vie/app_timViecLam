@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/ic_resume_outline.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFA500"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M14,2H6A2,2 0,0 0,4 4V20A2,2 0,0 0,6 22H18A2,2 0,0 0,20 20V8Z" />
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFA500"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M14,2V8H20" />
+    <line x1="16" y1="13" x2="8" y2="13"
+        android:strokeColor="#FFA500" android:strokeWidth="2" android:strokeLineCap="round"/>
+    <line x1="16" y1="17" x2="8" y2="17"
+        android:strokeColor="#FFA500" android:strokeWidth="2" android:strokeLineCap="round"/>
+    <line x1="10" y1="9" x2="8" y2="9"
+        android:strokeColor="#FFA500" android:strokeWidth="2" android:strokeLineCap="round"/>
+</vector>
