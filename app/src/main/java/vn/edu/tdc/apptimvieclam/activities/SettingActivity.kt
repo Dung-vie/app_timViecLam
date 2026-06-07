@@ -10,8 +10,6 @@ import vn.edu.tdc.apptimvieclam.databinding.SettingLayoutBinding
 
 class SettingActivity : AppCompatActivity() {
     private lateinit var binding: SettingLayoutBinding
-    private lateinit var btnUpdatePassword: Button
-    private lateinit var btnLogout: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,12 +18,8 @@ class SettingActivity : AppCompatActivity() {
 
         playMenu()
 
-
-        btnUpdatePassword = findViewById(R.id.btnUpdatePassword)
-        btnLogout = findViewById(R.id.btnLogout)
-
         // Chuyển sang màn hình đổi mật khẩu
-        btnUpdatePassword.setOnClickListener {
+        binding.txtUpdatePass.setOnClickListener {
 
             startActivity(
                 Intent(
@@ -36,7 +30,7 @@ class SettingActivity : AppCompatActivity() {
         }
 
         // Đăng xuất
-        btnLogout.setOnClickListener {
+        binding.btnLogout.setOnClickListener {
 
             FirebaseAuth.getInstance().signOut()
 
@@ -50,9 +44,7 @@ class SettingActivity : AppCompatActivity() {
             finish()
         }
     }
-companion object {
 
-}
     private fun playMenu() {
         binding.bottomMenu.menuSetting.setBackgroundResource(
             R.drawable.bg_menu_selected
