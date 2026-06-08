@@ -102,12 +102,20 @@ class LoginActivity : AppCompatActivity() {
         if (role == "ADMIN") {
             val intent = Intent(this, AdminDashboardActivity::class.java)
             startActivity(intent)
-
+            Toast.makeText(
+                this,
+                "Đăng nhập thành công",
+                Toast.LENGTH_LONG
+            ).show()
             finish()
         } else if (role == "USER") {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
-
+            Toast.makeText(
+                this,
+                "Đăng nhập thành công",
+                Toast.LENGTH_LONG
+            ).show()
             finish()
 
         } else if (role == "EMPLOYER") {

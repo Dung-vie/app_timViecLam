@@ -2,11 +2,13 @@ package vn.edu.tdc.apptimvieclam.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
 import vn.edu.tdc.apptimvieclam.R
 import vn.edu.tdc.apptimvieclam.databinding.SettingLayoutBinding
@@ -20,6 +22,7 @@ class SettingActivity : AppCompatActivity() {
         setContentView(binding.root)
         loadUserName()
         playMenu()
+        loadRecuiterPost()
 
     }
 
@@ -84,6 +87,33 @@ class SettingActivity : AppCompatActivity() {
                     binding.txtName.text = "Người dùng"
                 }
         }
+    }
+
+    private fun loadRecuiterPost() {
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+            ?: return
+
+        FirebaseDatabase.getInstance()
+            .reference
+            .child("users")
+            .child(uid)
+            .child("role")
+            .get()
+            .addOnSuccessListener { snapshot ->
+
+                val role =
+                    snapshot.getValue(String::class.java)
+
+                binding.txtPost.visibility =
+                    if (
+                        role.equals("EMPLOYER", true) ||
+                        role.equals("ADMIN", true)
+                    )
+                        View.VISIBLE
+                    else
+                        View.GONE
+            }
     }
 
 }
