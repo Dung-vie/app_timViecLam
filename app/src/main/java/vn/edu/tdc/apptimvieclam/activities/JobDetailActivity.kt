@@ -1,6 +1,7 @@
 package vn.edu.tdc.apptimvieclam.activities
 
 import android.os.Bundle
+import android.text.Html
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
@@ -13,11 +14,14 @@ import vn.edu.tdc.apptimvieclam.models.Applications
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.google.firebase.database.FirebaseDatabase
+import vn.edu.tdc.apptimvieclam.R
 
 class JobDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: JobDetailLayoutBinding
 
+    private var isSaved = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = JobDetailLayoutBinding.inflate(layoutInflater)
@@ -31,6 +35,31 @@ class JobDetailActivity : AppCompatActivity() {
 
         binding.btnApplyNow.setOnClickListener {
             applyJob(company)
+        }
+        // bat su kien cho nut back
+        binding.ivBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
+        // Bắt sự kiện lưu công việc
+        binding.ivBookmark.setOnClickListener {
+
+            isSaved = !isSaved
+
+            if (isSaved) {
+
+                binding.ivBookmark.setImageResource(
+                    R.drawable.ic_bookmark_filled
+                )
+
+                saveJob(company)
+
+            } else {
+
+                binding.ivBookmark.setImageResource(
+                    R.drawable.ic_bookmark_border
+                )
+            }
         }
     }
 
@@ -149,4 +178,27 @@ class JobDetailActivity : AppCompatActivity() {
             .load(company.company?.image)
             .into(binding.ivCompanyLogo)
     }
+    // hàm lưu job
+    private fun saveJob(company: Company?) {
+
+        if (company == null) return
+
+        val database = FirebaseDatabase.getInstance()
+
+        val savedRef = database.getReference("saved_jobs")
+
+        val jobId = savedRef.push().key
+
+        val jobData = hashMapOf(
+            "title" to company.title,
+            "company" to company.company.name,
+            "location" to company.location,
+            "description" to company.description
+        )
+
+        jobId?.let {
+            savedRef.child(it).setValue(jobData)
+        }
+    }
+
 }

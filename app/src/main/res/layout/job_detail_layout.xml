@@ -25,16 +25,37 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
-                <!-- Bookmark (top-right) -->
-                <ImageView
-                    android:id="@+id/ivBookmark"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="end"
-                    android:src="@drawable/ic_bookmark_border"
-                    app:tint="#9E9E9E"
-                    android:contentDescription="Bookmark" />
+                    <!-- Back -->
+                    <ImageView
+                        android:id="@+id/ivBack"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/arrow_back_24"
+                        android:tint="#1A1A2E"
+                        android:contentDescription="Back"
+                        android:background="?attr/selectableItemBackgroundBorderless" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <!-- Bookmark -->
+                    <ImageView
+                        android:id="@+id/ivBookmark"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_bookmark_border"
+                        app:tint="#9E9E9E"
+                        android:contentDescription="Bookmark"
+                        android:background="?attr/selectableItemBackgroundBorderless"/>
+                </LinearLayout>
 
                 <!-- Company Logo -->
                 <ImageView

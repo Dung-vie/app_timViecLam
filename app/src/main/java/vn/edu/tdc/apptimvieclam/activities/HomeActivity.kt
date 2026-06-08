@@ -2,10 +2,12 @@ package vn.edu.tdc.apptimvieclam.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,6 +44,7 @@ class HomeActivity : AppCompatActivity() {
 
         loadQuickFilters()
         playMenu()
+        loadAddRecuiter()
         getCompanies(companies)
 
     }
@@ -70,6 +73,12 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
 
             finish()
+        }
+
+        binding.imgNotify.setOnClickListener {
+            val intent = Intent(this, NotificationActivity::class.java)
+            startActivity(intent)
+
         }
 
     }
@@ -135,19 +144,18 @@ class HomeActivity : AppCompatActivity() {
         //B5. Xử lý
         call.enqueue(object : Callback<CompanyList> {
             override fun onResponse(call: Call<CompanyList>, result: Response<CompanyList>) {
-                //Xử lí dữ liệu đọc về tù web Service
-                //Nếu có dữ liệu mới xử lí
-                if (result.isSuccessful) {
-                    val companyList = result.body()
-                    //Xư lí nullable
-                    companyList?.companyList?.let {
-                        //Việc làm nổi bật
-                        companies.clear()
-                        companies.addAll( it.take(5) )
-                        adapter.notifyDataSetChanged()
+                if (!result.isSuccessful) return
 
-                        loadHighlightCompanies(it)
-                    }
+                val companyList = result.body()
+
+                companyList?.companyList?.let {
+                    if (isFinishing || isDestroyed) return
+
+                    companies.clear()
+                    companies.addAll(it.take(5))
+                    adapter.notifyDataSetChanged()
+
+                    loadHighlightCompanies(it)
                 }
             }
 
@@ -157,7 +165,11 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun loadHighlightCompanies(companies: List<Company>) {
+
+        if (isFinishing || isDestroyed) return
+
         binding.layoutCompany.removeAllViews()
+
         val topCompanies = companies
             .groupBy { it.company.name }
             .values
@@ -165,22 +177,55 @@ class HomeActivity : AppCompatActivity() {
             .take(5)
 
         topCompanies.forEach { jobs ->
+
             val company = jobs.first()
-            val itemBinding = ItemCompanyLayoutBinding.inflate(layoutInflater, binding.layoutCompany, false)
+
+            val itemBinding = ItemCompanyLayoutBinding.inflate(
+                layoutInflater,
+                binding.layoutCompany,
+                false
+            )
+
             itemBinding.txtCompany.text = company.company.name
 
-            Glide.with(this)
-                .load(company.company.image)
-                .into(itemBinding.imgLogo)
+            // FIX GLIDE AN TOÀN
+            if (!isFinishing && !isDestroyed) {
+                Glide.with(itemBinding.imgLogo)
+                    .load(company.company.image)
+                    .into(itemBinding.imgLogo)
+            }
 
             itemBinding.root.setOnClickListener {
                 val intent = Intent(this, SearchActivity::class.java)
                 intent.putExtra("COMPANY", company.company.name)
-
                 startActivity(intent)
             }
 
             binding.layoutCompany.addView(itemBinding.root)
         }
+    }
+
+    private fun loadAddRecuiter() {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        FirebaseDatabase.getInstance()
+            .reference
+            .child("users")
+            .child(uid)
+            .child("role")
+            .get()
+            .addOnSuccessListener { snapshot ->
+
+                val role = snapshot.getValue(String::class.java)
+
+                binding.bottomMenu.menuAdd.visibility =
+                    if (role.equals("EMPLOYER", true) ||
+                        role.equals("ADMIN", true)) {
+                        View.VISIBLE
+                    }
+                    else {
+                        View.GONE
+                    }
+            }
     }
 }

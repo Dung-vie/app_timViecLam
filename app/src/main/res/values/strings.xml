@@ -22,7 +22,7 @@
     <string name="home">Trang chủ</string>
     <string name="saved">Đã lưu</string>
     <string name="notify">Thông báo</string>
-    <string name="highlight">Các công việc nổi bật</string>
+    <string name="highlight">Top 5 công việc nổi bật</string>
     <string name="category">Danh mục</string>
     <string name="txtBanner">Tìm công việc theo danh mục ngay</string>
     <string name="search">Tìm kiếm</string>
@@ -35,7 +35,7 @@
     <string name="txtLoginGG">Đăng nhập với Google</string>
     <string name="txtCCMK">Chưa có mật khẩu?</string>
     <string name="txtRegister">Đăng ký ngay</string>
-    <string name="txtFullName">Full name</string>
+    <string name="txtFullName">Họ và tên</string>
     <string name="edtFullName">Hoàng Hữu Dũng</string>
     <string name="txtBDCTK">Bạn đã có tài khoản? </string>
     <string name="txtForgotPass2">Nhập email để lấy lại mật khẩu</string>
@@ -52,6 +52,9 @@
     <string name="cityHiglight">Các công ty nổi bật</string>
     <string name="txtName">Dũng Hoàng</string>
     <string name="txtHelo">Hello,</string>
+    <string name="txtCreate">+</string>
+    <string name="txtSetting">Cài đặt</string>
+    <string name="txtReadAll">Đọc tất cả</string>
     <string-array name="quick_filters">
         <item>Remote</item>
         <item>Lương cao</item>
@@ -60,4 +63,39 @@
         <item>Hà Nội</item>
         <item>Mới đăng</item>
     </string-array>
+    <string name="edit_profile_title">Chỉnh sửa hồ sơ</string>
+    <string name="edit_profile_subtitle">Cập nhật thông tin cá nhân của bạn</string>
+    <string name="hint_full_name">Nhập họ và tên</string>
+    <string name="txt_phone">Số điện thoại</string>
+    <string name="hint_phone">Nhập số điện thoại (tuỳ chọn)</string>
+    <string name="txt_address">Địa chỉ</string>
+    <string name="hint_address">Nhập địa chỉ (tuỳ chọn)</string>
+    <string name="btn_save">Lưu</string>
+    <string name="btn_cancel">Huỷ</string>
+    <string name="btn_close">Đóng</string>
+    <string name="profile_section_empty">Chưa có thông tin</string>
+    <string name="error_name_required">Vui lòng nhập họ và tên</string>
+    <string name="error_phone_invalid">Số điện thoại không hợp lệ</string>
+    <string name="error_not_logged_in">Vui lòng đăng nhập để chỉnh sửa hồ sơ</string>
+    <string name="profile_updated_success">Cập nhật hồ sơ thành công</string>
+    <string name="profile_update_failed">Cập nhật hồ sơ thất bại</string>
+    <string name="profile_load_failed">Không thể tải thông tin hồ sơ</string>
+    <string name="profile_section_saved">Đã lưu nội dung thành công</string>
+    <string name="profile_follower">Người theo dõi</string>
+    <string name="profile_following">Đang theo dõi</string>
+    <string name="profile_edit_button">Chỉnh sửa hồ sơ</string>
+    <string name="profile_about">Giới thiệu bản thân</string>
+    <string name="profile_work_experience">Kinh nghiệm làm việc</string>
+    <string name="profile_education">Học vấn</string>
+    <string name="profile_skill">Kỹ năng</string>
+    <string name="profile_language">Ngôn ngữ</string>
+    <string name="profile_appreciation">Thành tích / Giải thưởng</string>
+    <string name="profile_resume">Hồ sơ / CV</string>
+    <string name="hint_profile_about">Nhập nội dung giới thiệu về bản thân…</string>
+    <string name="hint_profile_work">Nhập kinh nghiệm làm việc (chức danh, công ty, thời gian)…</string>
+    <string name="hint_profile_education">Nhập thông tin học vấn (chuyên ngành, trường, thời gian)…</string>
+    <string name="hint_profile_skill">Nhập kỹ năng, phân cách bằng dấu phẩy…</string>
+    <string name="hint_profile_language">Nhập ngôn ngữ, phân cách bằng dấu phẩy…</string>
+    <string name="hint_profile_appreciation">Nhập thành tích hoặc giải thưởng…</string>
+    <string name="hint_profile_resume">Nhập tên file CV hoặc mô tả hồ sơ…</string>
 </resources>

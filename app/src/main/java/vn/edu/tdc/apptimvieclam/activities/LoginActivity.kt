@@ -7,10 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.database
+import vn.edu.tdc.apptimvieclam.admin.activities.AdminDashboardActivity
 import vn.edu.tdc.apptimvieclam.databinding.LoginLayoutBinding
 
 class LoginActivity : AppCompatActivity() {
-
     private lateinit var binding: LoginLayoutBinding
 
     private lateinit var auth: FirebaseAuth
@@ -18,7 +18,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Khởi tạo Binding
         binding = LoginLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -26,8 +25,7 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         // Nếu đã đăng nhập thì vào Home luôn
         if (auth.currentUser != null) {
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
+            checkUserRole(auth.currentUser!!.uid)
             return
         }
         // =========================
@@ -59,41 +57,7 @@ class LoginActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         val uid = auth.currentUser!!.uid
 
-                        Firebase.database.getReference("users")
-                            .child(uid)
-                            .get()
-                            .addOnSuccessListener { snapshot ->
-
-                                val role = snapshot.child("role").getValue(String::class.java)
-
-                                val status = snapshot.child("status").getValue(String::class.java)
-
-                                if (role == "ADMIN") {
-//                                    val intent = Intent(this, HomeActivity::class.java)
-//                                    startActivity(intent)
-//
-//                                    finish()
-                                } else if (role == "USER") {
-                                    val intent = Intent(this, HomeActivity::class.java)
-                                    startActivity(intent)
-
-                                    finish()
-
-                                } else if (role == "EMPLOYER") {
-                                    if (status == "ACTIVE") {
-                                        val intent = Intent(this, HomeActivity::class.java)
-                                        startActivity(intent)
-                                        finish()
-                                    } else {
-                                        Toast.makeText(
-                                            this,
-                                            "Tài khoản đang chờ duyệt",
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                        auth.signOut()
-                                    }
-                                }
-                            }
+                        checkUserRole(uid)
 
                     } else {
                         Toast.makeText(
@@ -133,4 +97,65 @@ class LoginActivity : AppCompatActivity() {
             )
         }
     }
+
+    private fun navigateByRole(role: String?, status: String?) {
+        if (role == "ADMIN") {
+            val intent = Intent(this, AdminDashboardActivity::class.java)
+            startActivity(intent)
+            Toast.makeText(
+                this,
+                "Đăng nhập thành công",
+                Toast.LENGTH_LONG
+            ).show()
+            finish()
+        } else if (role == "USER") {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            Toast.makeText(
+                this,
+                "Đăng nhập thành công",
+                Toast.LENGTH_LONG
+            ).show()
+            finish()
+
+        } else if (role == "EMPLOYER") {
+            if (status.equals("ACTIVE", true )) {
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                Toast.makeText(
+                    this,
+                    "Tài khoản đang chờ duyệt",
+                    Toast.LENGTH_LONG
+                ).show()
+                auth.signOut()
+
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        } else {
+            Toast.makeText(
+                this,
+                "Không xác định quyền tài khoản",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            auth.signOut()
+        }
+    }
+
+    private fun checkUserRole(uid: String) {
+        Firebase.database.getReference("users")
+            .child(uid)
+            .get()
+            .addOnSuccessListener { snapshot ->
+
+                val role = snapshot.child("role").getValue(String::class.java)
+                val status = snapshot.child("status").getValue(String::class.java)
+                navigateByRole(role, status)
+            }
+    }
+
 }

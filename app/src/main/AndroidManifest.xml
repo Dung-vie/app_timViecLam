@@ -4,7 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
+        android:name=".aplication.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTimViecLam"
         tools:targetApi="31">
+      
         <activity android:name=".activities.AppliedJobsActivity"
             android:exported="false"/>
         <activity android:name=".activities.UpdatePasswordActivity"
@@ -29,7 +33,6 @@
         <activity
             android:name=".activities.HomeActivity"
             android:exported="true">
-
         </activity>
         <activity
             android:name=".activities.RegisterActivity"
@@ -49,6 +52,25 @@
         <activity
             android:name=".activities.SettingActivity"
             android:exported="true"/>
+        <activity
+            android:name=".activities.NotificationActivity"
+            android:exported="true"/>
+
+        <activity
+            android:name=".admin.activities.AdminDashboardActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".admin.activities.ManageRecruiterActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".admin.activities.ManageJobsActivity"
+            android:exported="true"/>
+        <activity android:name=".activities.UpdatePasswordActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".activities.ProfileActivity" />
+        <activity
+            android:name=".activities.EditProfileActivity" />
 
     </application>
 

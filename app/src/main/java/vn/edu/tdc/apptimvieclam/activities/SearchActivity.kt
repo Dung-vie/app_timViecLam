@@ -10,6 +10,8 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,6 +38,7 @@ class SearchActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         playMenu()
+        loadAddRecuiter()
 
         companies = ArrayList()
         allCompanies = ArrayList()
@@ -222,5 +225,29 @@ class SearchActivity : AppCompatActivity() {
                 Log.e("API_ERROR", p1.message.toString())
             }
         })
+    }
+
+    private fun loadAddRecuiter() {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        FirebaseDatabase.getInstance()
+            .reference
+            .child("users")
+            .child(uid)
+            .child("role")
+            .get()
+            .addOnSuccessListener { snapshot ->
+
+                val role = snapshot.getValue(String::class.java)
+
+                binding.bottomMenu.menuAdd.visibility =
+                    if (role.equals("EMPLOYER", true) ||
+                        role.equals("ADMIN", true)
+                    ) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
+            }
     }
 }
