@@ -204,17 +204,16 @@ class HomeActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { snapshot ->
 
-                val role =
-                    snapshot.getValue(String::class.java)
+                val role = snapshot.getValue(String::class.java)
 
                 binding.bottomMenu.menuAdd.visibility =
-                    if (
-                        role.equals("EMPLOYER", true) ||
-                        role.equals("ADMIN", true)
-                    )
+                    if (role.equals("EMPLOYER", true) ||
+                        role.equals("ADMIN", true)) {
                         View.VISIBLE
-                    else
+                    }
+                    else {
                         View.GONE
+                    }
             }
     }
 }

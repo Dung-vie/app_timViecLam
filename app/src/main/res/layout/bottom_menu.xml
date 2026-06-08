@@ -54,6 +54,7 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:background="@drawable/bg_circle_primary"
+            android:visibility="gone"
             android:gravity="center">
 
             <TextView

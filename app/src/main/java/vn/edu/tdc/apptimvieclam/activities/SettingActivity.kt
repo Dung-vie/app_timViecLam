@@ -23,7 +23,7 @@ class SettingActivity : AppCompatActivity() {
         loadUserName()
         playMenu()
         loadRecuiterPost()
-
+        loadAddRecuiter()
     }
 
     private fun playMenu() {
@@ -113,6 +113,30 @@ class SettingActivity : AppCompatActivity() {
                         View.VISIBLE
                     else
                         View.GONE
+            }
+    }
+
+    private fun loadAddRecuiter() {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        FirebaseDatabase.getInstance()
+            .reference
+            .child("users")
+            .child(uid)
+            .child("role")
+            .get()
+            .addOnSuccessListener { snapshot ->
+
+                val role = snapshot.getValue(String::class.java)
+
+                binding.bottomMenu.menuAdd.visibility =
+                    if (role.equals("EMPLOYER", true) ||
+                        role.equals("ADMIN", true)
+                    ) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
             }
     }
 
