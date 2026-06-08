@@ -2,13 +2,10 @@ package vn.edu.tdc.apptimvieclam.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.util.Patterns
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import vn.edu.tdc.apptimvieclam.databinding.ForgotPasswordLayoutBinding
 
@@ -16,9 +13,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
     private lateinit var binding: ForgotPasswordLayoutBinding
     private lateinit var auth: FirebaseAuth
-
-    // OTP Demo
-    private var generatedOtp = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +22,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        // =========================
-        // RESET PASSWORD
-        // =========================
+        // Gửi email reset password
         binding.btnReset.setOnClickListener {
 
             val email = binding.edtEmail.text.toString().trim()
@@ -47,21 +39,10 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Tạo OTP Demo
-            generatedOtp = generateOtp()
-
-            Toast.makeText(
-                this,
-                "OTP Demo: $generatedOtp",
-                Toast.LENGTH_LONG
-            ).show()
-
-            showOtpDialog()
+            sendResetEmail(email)
         }
 
-        // =========================
-        // BACK LOGIN
-        // =========================
+        // Quay về Login
         binding.btnBackLogin.setOnClickListener {
 
             startActivity(
@@ -71,146 +52,45 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 )
             )
 
-            overridePendingTransition(
-                android.R.anim.fade_in,
-                android.R.anim.fade_out
-            )
-
             finish()
         }
     }
 
-    /**
-     * Sinh OTP ngẫu nhiên 6 số
-     */
-    private fun generateOtp(): String {
-        return (100000..999999).random().toString()
-    }
+    private fun sendResetEmail(email: String) {
 
-    /**
-     * Dialog nhập OTP
-     */
-    private fun showOtpDialog() {
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
 
-        val edtOtp = EditText(this)
+                if (task.isSuccessful) {
 
-        edtOtp.hint = "Nhập mã OTP"
-        edtOtp.inputType = InputType.TYPE_CLASS_NUMBER
+                    AlertDialog.Builder(this)
+                        .setTitle("Khôi phục mật khẩu")
+                        .setMessage(
+                            "Liên kết đặt lại mật khẩu đã được gửi đến:\n\n$email\n\nVui lòng kiểm tra Gmail của bạn."
+                        )
+                        .setCancelable(false)
+                        .setPositiveButton("OK") { _, _ ->
 
-        AlertDialog.Builder(this)
-            .setTitle("Xác thực OTP")
-            .setMessage("Vui lòng nhập mã OTP vừa nhận")
-            .setView(edtOtp)
+                            startActivity(
+                                Intent(
+                                    this,
+                                    LoginActivity::class.java
+                                )
+                            )
 
-            .setPositiveButton("Xác nhận") { _, _ ->
-
-                val otpInput =
-                    edtOtp.text.toString().trim()
-
-                if (otpInput == generatedOtp) {
-
-                    Toast.makeText(
-                        this,
-                        "OTP chính xác",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    showResetPasswordDialog()
+                            finish()
+                        }
+                        .show()
 
                 } else {
 
                     Toast.makeText(
                         this,
-                        "OTP không đúng",
-                        Toast.LENGTH_SHORT
+                        task.exception?.message
+                            ?: "Gửi email thất bại",
+                        Toast.LENGTH_LONG
                     ).show()
                 }
             }
-
-            .setNegativeButton("Hủy", null)
-            .show()
-    }
-
-    /**
-     * Dialog đổi mật khẩu
-     */
-    private fun showResetPasswordDialog() {
-
-        val layout = LinearLayout(this)
-
-        layout.orientation = LinearLayout.VERTICAL
-        layout.setPadding(50, 20, 50, 20)
-
-        val edtNewPassword = EditText(this)
-        edtNewPassword.hint = "Mật khẩu mới"
-        edtNewPassword.inputType =
-            InputType.TYPE_CLASS_TEXT or
-                    InputType.TYPE_TEXT_VARIATION_PASSWORD
-
-        val edtConfirmPassword = EditText(this)
-        edtConfirmPassword.hint = "Xác nhận mật khẩu"
-        edtConfirmPassword.inputType =
-            InputType.TYPE_CLASS_TEXT or
-                    InputType.TYPE_TEXT_VARIATION_PASSWORD
-
-        layout.addView(edtNewPassword)
-        layout.addView(edtConfirmPassword)
-
-        AlertDialog.Builder(this)
-            .setTitle("Đổi mật khẩu")
-            .setView(layout)
-
-            .setPositiveButton("Lưu") { _, _ ->
-
-                val newPass =
-                    edtNewPassword.text.toString().trim()
-
-                val confirmPass =
-                    edtConfirmPassword.text.toString().trim()
-
-                if (newPass.isEmpty()) {
-
-                    Toast.makeText(
-                        this,
-                        "Vui lòng nhập mật khẩu mới",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    return@setPositiveButton
-                }
-
-                if (newPass.length < 6) {
-
-                    Toast.makeText(
-                        this,
-                        "Mật khẩu tối thiểu 6 ký tự",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    return@setPositiveButton
-                }
-
-                if (newPass != confirmPass) {
-
-                    Toast.makeText(
-                        this,
-                        "Mật khẩu không khớp",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    return@setPositiveButton
-                }
-
-                Toast.makeText(
-                    this,
-                    "Đổi mật khẩu thành công (Demo)",
-                    Toast.LENGTH_LONG
-                ).show()
-
-                finish()
-            }
-
-            .setNegativeButton("Hủy", null)
-            .show()
     }
 }
