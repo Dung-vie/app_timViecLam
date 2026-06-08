@@ -10,23 +10,23 @@ class Company : Serializable {
     @SerializedName("location")
     var location: String
 
-        @SerializedName("company")
-        var company: CompanyItem
+    @SerializedName("company")
+    var company: CompanyItem
 
-        @SerializedName("types")
-        var types: ArrayList<Type>
+    @SerializedName("types")
+    var types: ArrayList<Type>
 
-        @SerializedName("published")
-        var publish: String
+    @SerializedName("published")
+    var publish: String
 
-        @SerializedName("description")
-        var description: String
+    @SerializedName("description")
+    var description: String
 
-        @SerializedName("salary_min")
-        var salaryMin: Double? = null
+    @SerializedName("salary_min")
+    var salaryMin: Double? = null
 
-        @SerializedName("salary_max")
-        var salaryMax: Double? = null
+    @SerializedName("salary_max")
+    var salaryMax: Double? = null
 
     @SerializedName("experience_level")
     var experienceLevel: String
@@ -36,7 +36,6 @@ class Company : Serializable {
     var recruiterUid: String
 
     var status: String = "pending"  // pending -> đang duyệt; approved -> đã phê duyệt
-
     constructor(
         title: String,
         location: String,
@@ -46,7 +45,7 @@ class Company : Serializable {
         description: String,
         salaryMin: Double?,
         salaryMax: Double?,
-        experienceLevel: String,
+        experienceLevel:String,
         jobId: String,
         recruiterUid: String,
         status: String
@@ -57,8 +56,8 @@ class Company : Serializable {
         this.types = types
         this.publish = publish
         this.description = description
-        this.salaryMin = salaryMin
         this.salaryMax = salaryMax
+        this.salaryMin = salaryMin
         this.experienceLevel = experienceLevel
         this.jobId = jobId
         this.recruiterUid = recruiterUid
@@ -80,24 +79,18 @@ class Company : Serializable {
         this.status = ""
     }
 
+    class CompanyItem : Serializable {
+        @SerializedName("name")
+        var name: String
 
-
-        class CompanyItem : Serializable {
-            @SerializedName("name")
-            var name: String
-
-            @SerializedName("logo")
-            var image: String
+        @SerializedName("logo")
+        var image: String
 
         constructor(name: String, image: String) {
             this.name = name
             this.image = image
         }
-
-        constructor() {
-            this.name = ""
-            this.image = ""
-        }
+    }
 
     class Type: Serializable {
         @SerializedName("name")
@@ -109,5 +102,5 @@ class Company : Serializable {
         constructor() {
             this.nameType = ""
         }
-
     }
+}

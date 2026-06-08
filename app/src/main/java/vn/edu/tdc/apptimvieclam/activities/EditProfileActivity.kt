@@ -10,11 +10,11 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import vn.edu.tdc.apptimvieclam.R
-import vn.edu.tdc.apptimvieclam.databinding.ActivityEditProfileBinding
+import vn.edu.tdc.apptimvieclam.databinding.EditProfileLayoutBinding
 
 class EditProfileActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityEditProfileBinding
+    private lateinit var binding: EditProfileLayoutBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
     private var uid = ""
@@ -22,7 +22,7 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityEditProfileBinding.inflate(layoutInflater)
+        binding = EditProfileLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()

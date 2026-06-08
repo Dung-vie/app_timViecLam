@@ -12,11 +12,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import vn.edu.tdc.apptimvieclam.R
-import vn.edu.tdc.apptimvieclam.databinding.ActivityProfileBinding
+import vn.edu.tdc.apptimvieclam.databinding.ProfileLayoutBinding
 
 class ProfileActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityProfileBinding
+    private lateinit var binding: ProfileLayoutBinding
 
     private val editProfileLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -29,7 +29,7 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityProfileBinding.inflate(layoutInflater)
+        binding = ProfileLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         loadUser()
