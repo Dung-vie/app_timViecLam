@@ -10,7 +10,6 @@
     android:paddingHorizontal="7dp"
     tools:context=".activities.HomeActivity">
 
-    <!-- Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -107,31 +106,46 @@
 
             </HorizontalScrollView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/cityHiglight"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <ListView
-                android:id="@+id/rvCompany"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/cityHiglight"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/highlight"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
 
-            <ListView
-                android:id="@+id/list_job"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:id="@+id/layoutCompany"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"/>
+
+                </HorizontalScrollView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/highlight"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ListView
+                    android:id="@+id/list_job"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -140,20 +154,6 @@
     <include
         android:id="@+id/bottomMenu"
         layout="@layout/bottom_menu"/>
-
-
 </LinearLayout>
 
-
-    <!--    <Spinner-->
-    <!--        android:id="@+id/spincities"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:layout_weight="1"/>-->
-
-    <!--    <ListView-->
-    <!--        android:id="@+id/list_job"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:layout_weight="9"/>-->
 
