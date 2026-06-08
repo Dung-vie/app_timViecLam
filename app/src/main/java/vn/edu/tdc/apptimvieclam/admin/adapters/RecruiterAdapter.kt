@@ -63,7 +63,7 @@ class RecruiterAdapter(
                 .child("users")
                 .child(recruiter.uid)
                 .child("status")
-                .setValue("approved")
+                .setValue("ACTIVE")
 
             Toast.makeText(
                 context,
