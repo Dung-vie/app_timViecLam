@@ -3,10 +3,14 @@ package vn.edu.tdc.apptimvieclam.models
 import java.io.Serializable
 
 data class Job(
-    var jobId: String = "",
+    var id: String = "",
     var title: String = "",
-    var company: String = "",
+    var companyName: String = "",
     var location: String = "",
     var salary: String = "",
-    var description: String = ""
+    var description: String = "",
+    var jobType: String = "",
+    var companyLogo: String = "",
+    var userId: String = "",
+    var createdAt: Long = 0
 ) : Serializable

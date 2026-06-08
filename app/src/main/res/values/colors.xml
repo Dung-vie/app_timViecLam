@@ -6,7 +6,9 @@
     <color name="primary">#1976D2</color>
     <color name="primary_dark">#0D47A1</color>
     <color name="accent">#42A5F5</color>
-
+    <color name="badge_fulltime">#2D2B6B</color>
+    <color name="badge_parttime">#E65100</color>
+    <color name="badge_remote">#2E7D32</color>
     <color name="text_primary">#212121</color>
     <color name="text_secondary">#757575</color>
 

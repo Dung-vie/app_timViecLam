@@ -75,6 +75,10 @@ class HomeActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.bottomMenu.menuAdd.setOnClickListener {
+            startActivity(Intent(this, CreateJobActivity::class.java))
+        }
+
         binding.imgNotify.setOnClickListener {
             val intent = Intent(this, NotificationActivity::class.java)
             startActivity(intent)

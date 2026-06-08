@@ -6,6 +6,7 @@
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+
     <application
         android:name=".aplication.MyApplication"
         android:allowBackup="true"
@@ -69,6 +70,15 @@
             android:name=".activities.ProfileActivity" />
         <activity
             android:name=".activities.EditProfileActivity" />
+        <activity
+            android:name=".activities.CreateJobActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ManageJobsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.EditJobActivity"
+            android:exported="false" />
         <activity
             android:name=".admin.activities.ApplicantListActivity"/>
         <activity
