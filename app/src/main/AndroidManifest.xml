@@ -28,7 +28,6 @@
         <activity
             android:name=".activities.HomeActivity"
             android:exported="true">
-
         </activity>
         <activity
             android:name=".activities.RegisterActivity"
@@ -48,6 +47,10 @@
         <activity
             android:name=".activities.SettingActivity"
             android:exported="true"/>
+        <activity
+            android:name=".activities.ProfileActivity" />
+        <activity
+            android:name=".activities.EditProfileActivity" />
 
     </application>
 

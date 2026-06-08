@@ -34,6 +34,10 @@ class SettingActivity : AppCompatActivity() {
                 )
             )
         }
+        //  Thông tin tài khoản
+        binding.btnSetting.setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
 
         // Đăng xuất
         btnLogout.setOnClickListener {

@@ -41,7 +41,6 @@
 
             adapter = MyListViewAdapter(this, companies)
             binding.listJob.adapter = adapter
-
             loadQuickFilters()
             playMenu()
             getCompanies(companies)

@@ -64,6 +64,7 @@
                 this.name = name
                 this.image = image
             }
+            constructor() : this("", "")
         }
 
         class Type: Serializable {
@@ -73,6 +74,18 @@
             constructor(nameType: String) {
                 this.nameType = nameType
             }
+            constructor() : this("")
         }
+        constructor() : this(
+            "",
+            "",
+            CompanyItem(),
+            arrayListOf(),
+            "",
+            "",
+            null,
+            null,
+            ""
+        )
 
     }
