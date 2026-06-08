@@ -39,6 +39,7 @@ class Company : Serializable {
     var recruiterUid: String
 
     var status: String = "pending"  // pending -> đang duyệt; approved -> đã phê duyệt
+
     constructor(
         id: String,
         title: String,
@@ -96,6 +97,10 @@ class Company : Serializable {
             this.name = name
             this.image = image
         }
+        constructor() {
+            this.name = ""
+            this.image = ""
+        }
     }
 
     class Type: Serializable {
@@ -109,4 +114,5 @@ class Company : Serializable {
             this.nameType = ""
         }
     }
+
 }

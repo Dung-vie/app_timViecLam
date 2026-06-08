@@ -8,11 +8,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import vn.edu.tdc.apptimvieclam.adapters.AppliedJobAdapter
 import vn.edu.tdc.apptimvieclam.databinding.AppliedJobsLayoutBinding
 import vn.edu.tdc.apptimvieclam.models.Applications
 
+import com.google.firebase.database.ValueEventListener
 class AppliedJobsActivity : AppCompatActivity() {
     private lateinit var binding: AppliedJobsLayoutBinding
     private lateinit var appliedJobAdapter: AppliedJobAdapter

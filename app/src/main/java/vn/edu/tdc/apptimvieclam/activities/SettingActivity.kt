@@ -23,6 +23,7 @@ class SettingActivity : AppCompatActivity() {
         playMenu()
         loadRecuiterPost()
         loadAddRecuiter()
+        setupRecruiterActions()
 
         // Mở màn hình Lịch sử ứng tuyển (Công việc đã nộp)
         binding.txtAppliedJobs.setOnClickListener {
@@ -166,5 +167,15 @@ class SettingActivity : AppCompatActivity() {
                         View.GONE
                     }
             }
+    }
+
+    private fun setupRecruiterActions() {
+        binding.txtPost.setOnClickListener {
+            startActivity(Intent(this, ManageJobsActivity::class.java))
+        }
+
+        binding.bottomMenu.menuAdd.setOnClickListener {
+            startActivity(Intent(this, CreateJobActivity::class.java))
+        }
     }
 }

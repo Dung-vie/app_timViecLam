@@ -2,173 +2,75 @@ package vn.edu.tdc.apptimvieclam.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.database
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import vn.edu.tdc.apptimvieclam.R
 import vn.edu.tdc.apptimvieclam.adapters.JobAdapter
 import vn.edu.tdc.apptimvieclam.databinding.SearchLayoutBinding
-import vn.edu.tdc.apptimvieclam.models.Company
-import vn.edu.tdc.apptimvieclam.models.CompanyAPI
-import vn.edu.tdc.apptimvieclam.models.CompanyList
+import vn.edu.tdc.apptimvieclam.models.Job
 
 class SearchActivity : AppCompatActivity() {
+
     private lateinit var binding: SearchLayoutBinding
-    private lateinit var companies: ArrayList<Company>
+
     private lateinit var jobAdapter: JobAdapter
-    private lateinit var companyAPI: CompanyAPI
-    private lateinit var allCompanies: ArrayList<Company>
+    private var allJobs: ArrayList<Job> = ArrayList()
+    private var jobList: ArrayList<Job> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = SearchLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         playMenu()
-        loadAddRecuiter()
+        setupRecyclerView()
+        setupSearch()
+        setupFilter()
 
-        companies = ArrayList()
-        allCompanies = ArrayList()
-        // tạo adapter trước
-        jobAdapter = JobAdapter(companies) { company ->
-            val intent = Intent(this, JobDetailActivity::class.java)
-            intent.putExtra("JOB", company)
-            startActivity(intent)
-        }
+        loadJobs()
+    }
 
-        binding.rvJobs.layoutManager =
-            LinearLayoutManager(this)
-        // rồi mới gán vào ListView
+    // ================= SETUP =================
+
+    private fun setupRecyclerView() {
+        jobAdapter = JobAdapter(jobList,
+            onEdit = {},
+            onDelete = {},
+            onItemClick = { job ->
+                val intent = Intent(this, JobDetailActivity::class.java)
+                intent.putExtra("JOB", job)
+                startActivity(intent)
+            }
+        )
+
+        binding.rvJobs.layoutManager = LinearLayoutManager(this)
         binding.rvJobs.adapter = jobAdapter
-
-        //Test firebase
-        val database = Firebase.database
-        val myRef = database.getReference("message") //key
-        myRef.setValue("Hello, DUNG!") //value
-        //ket thuc test
-
-        // SEARCH
-        binding.searchJob.setOnQueryTextListener(
-            object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    return false
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    val filteredList = allCompanies.filter {
-                        it.title.contains(
-                            newText ?: "",
-                            ignoreCase = true
-                        )
-                    }
-                    jobAdapter.updateList(
-                        ArrayList(filteredList)
-                    )
-                    return true
-                }
-            }
-        )
-
-        //Filter
-        binding.spFilter.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-
-                    val selected =
-                        parent?.getItemAtPosition(position)
-                            .toString()
-
-                    if (selected == "Tất cả") {
-                        jobAdapter.updateList(
-                            ArrayList(allCompanies)
-                        )
-
-                    } else {
-                        val filtered =
-                            allCompanies.filter { company ->
-                                company.types.any { type ->
-                                    type.nameType.equals(
-                                        selected,
-                                        ignoreCase = true
-                                    )
-                                }
-                            }
-
-                        jobAdapter.updateList(
-                            ArrayList(filtered)
-                        )
-                    }
-                }
-
-                override fun onNothingSelected(
-                    parent: AdapterView<*>?
-                ) {
-                }
-            }
-
-
-        getCompanies(companies)
     }
 
-    private fun playMenu() {
-        binding.bottomMenu.menuSearch.setBackgroundResource(
-            R.drawable.bg_menu_selected
-        )
+    private fun setupSearch() {
+        binding.searchJob.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?) = false
 
-        binding.bottomMenu.menuHome.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filtered = allJobs.filter {
+                    it.title.contains(newText ?: "", ignoreCase = true) ||
+                            it.companyName.contains(newText ?: "", ignoreCase = true)
+                }
 
-            finish()
-        }
-
-        binding.bottomMenu.menuSaved.setOnClickListener {
-            val intent = Intent(this, SavedActivity::class.java)
-            startActivity(intent)
-
-            finish()
-        }
-
-        binding.bottomMenu.menuSetting.setOnClickListener {
-            val intent = Intent(this, SettingActivity::class.java)
-            startActivity(intent)
-
-            finish()
-        }
+                jobAdapter.updateList(ArrayList(filtered))
+                return true
+            }
+        })
     }
 
-
-    // ham lay filter
-    private fun loadFilterFromApi() {
-        val filterList = ArrayList<String>()
-        filterList.add("Tất cả")
-        val typeSet = mutableSetOf<String>()
-        allCompanies.forEach { company ->
-            company.types.forEach { type ->
-                typeSet.add(type.nameType)
-            }
-        }
-
-        filterList.addAll(typeSet.sorted())
+    private fun setupFilter() {
+        val filterList = listOf("Tất cả", "Full-time", "Part-time", "Remote")
 
         val adapter = ArrayAdapter(
             this,
@@ -181,73 +83,72 @@ class SearchActivity : AppCompatActivity() {
         )
 
         binding.spFilter.adapter = adapter
-    }
-    //B3:Viết hàm xử lý dữ liệu:
-    private fun getCompanies(companies: ArrayList<Company> ) {
-        //B1: Xóa dữ liệu cũ
-        companies.clear()
-        //B2: Định nghĩa đối tượng retrofit
-        val retrofit = Retrofit.Builder()
-            .baseUrl(CompanyAPI.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        //B3: Xây dưnng đối tượng weatherAPI
-        companyAPI = retrofit.create(CompanyAPI::class.java)
-        //B4: Gọi hàm đọc dữ liệu từ Webservice
-        val call = companyAPI.getCompany()
-        //B5. Xử lý
-        call.enqueue(object : Callback<CompanyList> {
-            override fun onResponse(call: Call<CompanyList>, result: Response<CompanyList>) {
-                //Xử lí dữ liệu đọc về tù web Service
-                //Nếu có dữ liệu mới xử lí
-                if (result.isSuccessful) {
-                    val companyList = result.body()
 
-                    Log.d("API_CODE", result.code().toString())
+        binding.spFilter.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
 
-                    if(result.isSuccessful){
-                        Log.d("API_SUCCESS", result.body().toString())
-                    }
-                    //Xư lí nullable
-                    companyList?.companyList?.let {
-                        companies.clear()
-                        companies.addAll(it)
-                        allCompanies.clear()
-                        allCompanies.addAll(it)
-                        loadFilterFromApi()
-                    }
-                    //Báo cho ListView cập nhật lại dữ liệu
-                    jobAdapter.notifyDataSetChanged()
-                }
-            }
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
 
-            override fun onFailure(p0: Call<CompanyList>, p1: Throwable) {
-                Log.e("API_ERROR", p1.message.toString())
-            }
-        })
-    }
+                    val selected = parent?.getItemAtPosition(position).toString()
 
-    private fun loadAddRecuiter() {
-        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
-
-        FirebaseDatabase.getInstance()
-            .reference
-            .child("users")
-            .child(uid)
-            .child("role")
-            .get()
-            .addOnSuccessListener { snapshot ->
-
-                val role = snapshot.getValue(String::class.java)
-
-                binding.bottomMenu.menuAdd.visibility =
-                    if (role.equals("EMPLOYER", true) ||
-                        role.equals("ADMIN", true)
-                    ) {
-                        View.VISIBLE
+                    if (selected == "Tất cả") {
+                        jobAdapter.updateList(ArrayList(allJobs))
                     } else {
-                        View.GONE
+                        val filtered = allJobs.filter {
+                            it.jobType.equals(selected, true)
+                        }
+                        jobAdapter.updateList(ArrayList(filtered))
                     }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
+    }
+
+    // ================= DATA =================
+
+    private fun loadJobs() {
+        val database = FirebaseDatabase.getInstance().reference.child("jobs")
+
+        database.get().addOnSuccessListener { snapshot ->
+
+            val list = ArrayList<Job>()
+
+            for (child in snapshot.children) {
+                val job = child.getValue(Job::class.java)
+                if (job != null) list.add(job)
+            }
+
+            allJobs.clear()
+            allJobs.addAll(list)
+
+            jobAdapter.updateList(ArrayList(allJobs))
+        }
+    }
+
+    // ================= MENU =================
+
+    private fun playMenu() {
+        binding.bottomMenu.menuSearch.setBackgroundResource(R.drawable.bg_menu_selected)
+
+        binding.bottomMenu.menuHome.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
+        }
+
+        binding.bottomMenu.menuSaved.setOnClickListener {
+            startActivity(Intent(this, SavedActivity::class.java))
+            finish()
+        }
+
+        binding.bottomMenu.menuSetting.setOnClickListener {
+            startActivity(Intent(this, SettingActivity::class.java))
+            finish()
+        }
     }
 }
