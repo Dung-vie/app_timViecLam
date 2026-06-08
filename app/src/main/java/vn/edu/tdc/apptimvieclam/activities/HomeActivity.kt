@@ -144,19 +144,18 @@ class HomeActivity : AppCompatActivity() {
         //B5. Xử lý
         call.enqueue(object : Callback<CompanyList> {
             override fun onResponse(call: Call<CompanyList>, result: Response<CompanyList>) {
-                //Xử lí dữ liệu đọc về tù web Service
-                //Nếu có dữ liệu mới xử lí
-                if (result.isSuccessful) {
-                    val companyList = result.body()
-                    //Xư lí nullable
-                    companyList?.companyList?.let {
-                        //Việc làm nổi bật
-                        companies.clear()
-                        companies.addAll( it.take(5) )
-                        adapter.notifyDataSetChanged()
+                if (!result.isSuccessful) return
 
-                        loadHighlightCompanies(it)
-                    }
+                val companyList = result.body()
+
+                companyList?.companyList?.let {
+                    if (isFinishing || isDestroyed) return
+
+                    companies.clear()
+                    companies.addAll(it.take(5))
+                    adapter.notifyDataSetChanged()
+
+                    loadHighlightCompanies(it)
                 }
             }
 
@@ -166,7 +165,11 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun loadHighlightCompanies(companies: List<Company>) {
+
+        if (isFinishing || isDestroyed) return
+
         binding.layoutCompany.removeAllViews()
+
         val topCompanies = companies
             .groupBy { it.company.name }
             .values
@@ -174,18 +177,27 @@ class HomeActivity : AppCompatActivity() {
             .take(5)
 
         topCompanies.forEach { jobs ->
+
             val company = jobs.first()
-            val itemBinding = ItemCompanyLayoutBinding.inflate(layoutInflater, binding.layoutCompany, false)
+
+            val itemBinding = ItemCompanyLayoutBinding.inflate(
+                layoutInflater,
+                binding.layoutCompany,
+                false
+            )
+
             itemBinding.txtCompany.text = company.company.name
 
-            Glide.with(this)
-                .load(company.company.image)
-                .into(itemBinding.imgLogo)
+            // FIX GLIDE AN TOÀN
+            if (!isFinishing && !isDestroyed) {
+                Glide.with(itemBinding.imgLogo)
+                    .load(company.company.image)
+                    .into(itemBinding.imgLogo)
+            }
 
             itemBinding.root.setOnClickListener {
                 val intent = Intent(this, SearchActivity::class.java)
                 intent.putExtra("COMPANY", company.company.name)
-
                 startActivity(intent)
             }
 

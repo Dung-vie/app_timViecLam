@@ -13,4 +13,5 @@
     <color name="card_bg">#FFFFFF</color>
     <color name="type_bg">#E3F2FD</color>
     <color name="type_text">#1976D2</color>
+    <color name="profile_content_text">#666680</color>
 </resources>

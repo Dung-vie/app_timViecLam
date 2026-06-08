@@ -24,6 +24,36 @@ class SettingActivity : AppCompatActivity() {
         playMenu()
         loadRecuiterPost()
         loadAddRecuiter()
+
+        // Chuyển sang màn hình đổi mật khẩu
+        binding.txtUpdatePass.setOnClickListener {
+
+            startActivity(
+                Intent(
+                    this,
+                    UpdatePasswordActivity::class.java
+                )
+            )
+        }
+        // Thông tin tài khoản
+        binding.txtInfo.setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
+
+        // Đăng xuất
+        binding.btnLogout.setOnClickListener {
+
+            FirebaseAuth.getInstance().signOut()
+
+            startActivity(
+                Intent(
+                    this,
+                    LoginActivity::class.java
+                )
+            )
+
+            finish()
+        }
     }
 
     private fun playMenu() {
@@ -139,5 +169,4 @@ class SettingActivity : AppCompatActivity() {
                     }
             }
     }
-
 }

@@ -10,23 +10,23 @@ class Company : Serializable {
     @SerializedName("location")
     var location: String
 
-    @SerializedName("company")
-    var company: CompanyItem
+        @SerializedName("company")
+        var company: CompanyItem
 
-    @SerializedName("types")
-    var types: ArrayList<Type>
+        @SerializedName("types")
+        var types: ArrayList<Type>
 
-    @SerializedName("published")
-    var publish: String
+        @SerializedName("published")
+        var publish: String
 
-    @SerializedName("description")
-    var description: String
+        @SerializedName("description")
+        var description: String
 
-    @SerializedName("salary_min")
-    var salaryMin: Double? = null
+        @SerializedName("salary_min")
+        var salaryMin: Double? = null
 
-    @SerializedName("salary_max")
-    var salaryMax: Double? = null
+        @SerializedName("salary_max")
+        var salaryMax: Double? = null
 
     @SerializedName("experience_level")
     var experienceLevel: String
@@ -82,12 +82,12 @@ class Company : Serializable {
 
 
 
-    class CompanyItem : Serializable {
-        @SerializedName("name")
-        var name: String
+        class CompanyItem : Serializable {
+            @SerializedName("name")
+            var name: String
 
-        @SerializedName("logo")
-        var image: String
+            @SerializedName("logo")
+            var image: String
 
         constructor(name: String, image: String) {
             this.name = name
@@ -98,7 +98,6 @@ class Company : Serializable {
             this.name = ""
             this.image = ""
         }
-    }
 
     class Type: Serializable {
         @SerializedName("name")
@@ -110,6 +109,5 @@ class Company : Serializable {
         constructor() {
             this.nameType = ""
         }
-    }
 
-}
+    }
