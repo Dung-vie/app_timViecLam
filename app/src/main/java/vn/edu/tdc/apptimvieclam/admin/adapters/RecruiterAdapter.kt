@@ -7,6 +7,7 @@ import android.widget.BaseAdapter
 import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import vn.edu.tdc.apptimvieclam.databinding.AdminItemRecruiterBinding
+import vn.edu.tdc.apptimvieclam.models.Notification
 import vn.edu.tdc.apptimvieclam.models.User
 
 class RecruiterAdapter(
@@ -50,7 +51,7 @@ class RecruiterAdapter(
         val recruiter = list[position]
 
         binding.txtCompanyName.text =
-            recruiter.fullName
+            recruiter.name
 
         binding.txtRecruiterEmail.text =
             recruiter.email
@@ -64,12 +65,30 @@ class RecruiterAdapter(
                 .child(recruiter.uid)
                 .child("status")
                 .setValue("ACTIVE")
+                .addOnSuccessListener {
 
-            Toast.makeText(
-                context,
-                "Đã duyệt nhà tuyển dụng",
-                Toast.LENGTH_SHORT
-            ).show()
+                    val notification = Notification(
+                        System.currentTimeMillis(),
+                        false,
+                        "ACCOUNT_APPROVED",
+                        "Tài khoản nhà tuyển dụng của bạn đã được Admin phê duyệt.",
+                        "Tài khoản được duyệt"
+                    )
+
+                    FirebaseDatabase
+                        .getInstance()
+                        .reference
+                        .child("notifications")
+                        .child(recruiter.uid)
+                        .push()
+                        .setValue(notification)
+
+                    Toast.makeText(
+                        context,
+                        "Đã duyệt nhà tuyển dụng",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
         }
 
         binding.btnRejectRecruiter.setOnClickListener {
@@ -79,13 +98,32 @@ class RecruiterAdapter(
                 .reference
                 .child("users")
                 .child(recruiter.uid)
-                .removeValue()
+                .child("status")
+                .setValue("REJECTED")
+                .addOnSuccessListener {
 
-            Toast.makeText(
-                context,
-                "Đã từ chối nhà tuyển dụng",
-                Toast.LENGTH_SHORT
-            ).show()
+                    val notification = Notification(
+                        System.currentTimeMillis(),
+                        false,
+                        "ACCOUNT_REJECTED",
+                        "Tài khoản nhà tuyển dụng của bạn không được Admin phê duyệt.",
+                        "Tài khoản bị từ chối"
+                    )
+
+                    FirebaseDatabase
+                        .getInstance()
+                        .reference
+                        .child("notifications")
+                        .child(recruiter.uid)
+                        .push()
+                        .setValue(notification)
+
+                    Toast.makeText(
+                        context,
+                        "Đã từ chối nhà tuyển dụng",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
         }
 
         return binding.root

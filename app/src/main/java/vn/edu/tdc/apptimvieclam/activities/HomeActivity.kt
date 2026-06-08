@@ -1,12 +1,21 @@
 package vn.edu.tdc.apptimvieclam.activities
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.PendingIntent
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.bumptech.glide.Glide
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
 import retrofit2.Call
@@ -22,6 +31,8 @@ import vn.edu.tdc.apptimvieclam.R
 import vn.edu.tdc.apptimvieclam.adapters.MyListViewAdapter
 import vn.edu.tdc.apptimvieclam.databinding.ItemCompanyLayoutBinding
 import vn.edu.tdc.apptimvieclam.databinding.ItemFilterLayoutBinding
+import vn.edu.tdc.apptimvieclam.models.Notification
+import vn.edu.tdc.apptimvieclam.utils.NotificationHelper
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: HomeLayoutBinding
@@ -29,6 +40,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var companies: ArrayList<Company>
     private lateinit var adapter: MyListViewAdapter
     private lateinit var companyAPI: CompanyAPI
+    private val REQ = 999
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +58,14 @@ class HomeActivity : AppCompatActivity() {
         playMenu()
         loadAddRecuiter()
         getCompanies(companies)
-
+        if (checkPermission(Manifest.permission.POST_NOTIFICATIONS)) {
+            //Cho phep
+            doSomething()
+        }
+        // Cho phép doSomething()
+        else {
+            requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), REQ)
+        }
     }
 
     private fun playMenu() {
@@ -231,5 +250,96 @@ class HomeActivity : AppCompatActivity() {
                         View.GONE
                     }
             }
+    }
+
+    private fun checkPermission(permission: String): Boolean {
+        return (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQ && permissions.size == grantResults.size && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            doSomething()
+        }
+    }
+
+    private fun doSomething() {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val startTime = System.currentTimeMillis()
+
+        FirebaseDatabase.getInstance()
+            .reference
+            .child("notifications")
+            .child(uid)
+            .addChildEventListener(object : ChildEventListener {
+
+                override fun onChildAdded(
+                    snapshot: DataSnapshot,
+                    previousChildName: String?
+                ) {
+                    val notification =
+                        snapshot.getValue(Notification::class.java)
+
+                    if (
+                        notification != null &&
+                        notification.createdAt >= startTime
+                    ) {
+                        showNotification(
+                            notification.title,
+                            notification.message
+                        )
+                    }
+                }
+
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                }
+
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+                }
+
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun showNotification(
+        title: String,
+        message: String
+    ) {
+        val intent = Intent(this, NotificationActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+
+        val pendingIntent = PendingIntent.getActivity(this,0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val notification = NotificationCompat.Builder(
+            this,
+            NotificationHelper.CHANNEL_ID
+        )
+            .setSmallIcon(R.drawable.ic_notify)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .build()
+
+        val manager = NotificationManagerCompat.from(this)
+
+        manager.notify(
+            System.currentTimeMillis().toInt(),
+            notification
+        )
     }
 }

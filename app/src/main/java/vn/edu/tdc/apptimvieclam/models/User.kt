@@ -5,7 +5,7 @@ import java.io.Serializable
 class User : Serializable {
     var uid: String
 
-    var fullName: String
+    var name: String
 
     var email: String
 
@@ -13,9 +13,9 @@ class User : Serializable {
 
     var status: String
 
-    constructor(uid: String, fullName: String, email: String, role: String, status: String) {
+    constructor(uid: String, name: String, email: String, role: String, status: String) {
         this.uid = uid
-        this.fullName = fullName
+        this.name = name
         this.email = email
         this.role = role
         this.status = status
@@ -23,7 +23,7 @@ class User : Serializable {
 
     constructor() {
         uid = ""
-        fullName = ""
+        name = ""
         email = ""
         role = ""
         status = ""

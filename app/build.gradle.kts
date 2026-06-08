@@ -53,10 +53,6 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.retrofit2.converter.gson)
-// Firebase BOM (QUAN TRỌNG)
-    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
-
-// Firebase services
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
     implementation("com.google.firebase:firebase-database:21.0.0")
     implementation("com.google.firebase:firebase-firestore-ktx")
@@ -65,12 +61,8 @@ dependencies {
 
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
-
     kapt("com.github.bumptech.glide:compiler:4.16.0")
-
     implementation(libs.play.services.maps)
-
-
 
     implementation("androidx.recyclerview:recyclerview:1.3.2")
 
