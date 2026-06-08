@@ -2,7 +2,6 @@ package vn.edu.tdc.apptimvieclam.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import vn.edu.tdc.apptimvieclam.R
@@ -28,8 +27,8 @@ class SettingActivity : AppCompatActivity() {
                 )
             )
         }
-        //  Thông tin tài khoản
-        binding.btnSetting.setOnClickListener {
+        // Thông tin tài khoản
+        binding.txtInfo.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
         }
 

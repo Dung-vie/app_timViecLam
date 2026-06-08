@@ -99,7 +99,13 @@ class MyListViewAdapter(private val context: Activity,
             ?: return
 
         val jobKey =
-            company.title + "_" + company.company.name
+            (company.title + "_" + company.company.name)
+                .replace(".", "_")
+                .replace("#", "_")
+                .replace("$", "_")
+                .replace("[", "_")
+                .replace("]", "_")
+                .replace("/", "_")
 
         Firebase.database.reference
             .child("saved_jobs")

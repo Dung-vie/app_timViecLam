@@ -29,6 +29,10 @@ class JobDetailActivity : AppCompatActivity() {
         binding.btnApplyNow.setOnClickListener {
             applyJob(company)
         }
+        // bat su kien cho nut back
+        binding.ivBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         // Bắt sự kiện lưu công việc
         binding.ivBookmark.setOnClickListener {
