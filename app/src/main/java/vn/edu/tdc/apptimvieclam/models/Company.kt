@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 class Company : Serializable {
+   @SerializedName("id") // Hoặc thay bằng đúng tên trường ID mà API của bạn trả về (ví dụ: "job_id")
+    var id: String = ""
+  
     @SerializedName("title")
     var title: String
 
@@ -37,6 +40,7 @@ class Company : Serializable {
 
     var status: String = "pending"  // pending -> đang duyệt; approved -> đã phê duyệt
     constructor(
+        id: String,
         title: String,
         location: String,
         company: CompanyItem,
@@ -50,6 +54,7 @@ class Company : Serializable {
         recruiterUid: String,
         status: String
     ) {
+      this.id = id
         this.title = title
         this.location = location
         this.company = company
@@ -65,6 +70,7 @@ class Company : Serializable {
     }
 
     constructor() {
+      this.id = ""
         this.title = ""
         this.location = ""
         this.company = CompanyItem("", "")
