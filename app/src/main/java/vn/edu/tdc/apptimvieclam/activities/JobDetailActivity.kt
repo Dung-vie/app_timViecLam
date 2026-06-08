@@ -14,7 +14,6 @@ import vn.edu.tdc.apptimvieclam.models.Applications
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import com.google.firebase.database.FirebaseDatabase
 import vn.edu.tdc.apptimvieclam.R
 
 class JobDetailActivity : AppCompatActivity() {

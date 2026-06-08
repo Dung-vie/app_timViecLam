@@ -10,12 +10,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import vn.edu.tdc.apptimvieclam.adapters.AppliedJobAdapter
-import vn.edu.tdc.apptimvieclam.databinding.ActivityAppliedJobsBinding
+import vn.edu.tdc.apptimvieclam.databinding.AppliedJobsLayoutBinding
 import vn.edu.tdc.apptimvieclam.models.Applications
 
 class AppliedJobsActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityAppliedJobsBinding
+    private lateinit var binding: AppliedJobsLayoutBinding
     private lateinit var appliedJobAdapter: AppliedJobAdapter
     private val applicationList = mutableListOf<Applications>()
 
@@ -23,7 +22,7 @@ class AppliedJobsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // 1. Khởi tạo và thiết lập ViewBinding
-        binding = ActivityAppliedJobsBinding.inflate(layoutInflater)
+        binding = AppliedJobsLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // 2. Bắt sự kiện nút Back quay lại màn hình trước
