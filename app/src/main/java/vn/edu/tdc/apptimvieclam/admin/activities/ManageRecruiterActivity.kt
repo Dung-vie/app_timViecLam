@@ -1,6 +1,7 @@
 package vn.edu.tdc.apptimvieclam.admin.activities
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -31,33 +32,22 @@ class ManageRecruiterActivity : AppCompatActivity() {
     }
 
     private fun loadRecruiters() {
-
         FirebaseDatabase
             .getInstance()
             .reference
             .child("users")
             .addValueEventListener(
                 object : ValueEventListener {
-
-                    override fun onDataChange(
-                        snapshot: DataSnapshot
-                    ) {
-
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        Log.d(
+                            "TEST",
+                            "Total: ${snapshot.childrenCount}"
+                        )
                         recruiters.clear()
-
                         for (item in snapshot.children) {
+                            val user = item.getValue(User::class.java)
 
-                            val user =
-                                item.getValue(
-                                    User::class.java
-                                )
-
-                            if (
-                                user != null
-                                && user.role == "employee"
-                                && user.status == "pending"
-                            ) {
-
+                            if (user != null &&  user.role.equals("EMPLOYER", true) && user.status.equals("PENDING", true)) {
                                 recruiters.add(user)
                             }
                         }

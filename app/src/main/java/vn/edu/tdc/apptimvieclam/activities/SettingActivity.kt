@@ -3,46 +3,24 @@ package vn.edu.tdc.apptimvieclam.activities
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.database
 import vn.edu.tdc.apptimvieclam.R
 import vn.edu.tdc.apptimvieclam.databinding.SettingLayoutBinding
 
 class SettingActivity : AppCompatActivity() {
     private lateinit var binding: SettingLayoutBinding
-
+    private var name:String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SettingLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        loadUserName()
         playMenu()
 
-        // Chuyển sang màn hình đổi mật khẩu
-        binding.txtUpdatePass.setOnClickListener {
-
-            startActivity(
-                Intent(
-                    this,
-                    UpdatePasswordActivity::class.java
-                )
-            )
-        }
-
-        // Đăng xuất
-        binding.btnLogout.setOnClickListener {
-
-            FirebaseAuth.getInstance().signOut()
-
-            startActivity(
-                Intent(
-                    this,
-                    LoginActivity::class.java
-                )
-            )
-
-            finish()
-        }
     }
 
     private fun playMenu() {
@@ -71,5 +49,41 @@ class SettingActivity : AppCompatActivity() {
             finish()
         }
 
+        // Đăng xuất
+        binding.btnLogout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+
+            Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show()
+        }
+
+        // Chuyển sang màn hình đổi mật khẩu
+        binding.txtUpdatePass.setOnClickListener {
+            val intent = Intent(this, UpdatePasswordActivity::class.java)
+            startActivity(intent)
+        }
+
     }
+
+    private fun loadUserName() {
+        val user = FirebaseAuth.getInstance().currentUser
+
+        if (user != null) {
+            Firebase.database.reference
+                .child("users")
+                .child(user.uid)
+                .child("name")
+                .get()
+                .addOnSuccessListener { snapshot ->
+                    name = snapshot.getValue(String::class.java) ?: "Người dùng"
+                    binding.txtName.text = name
+                }
+                .addOnFailureListener {
+                    binding.txtName.text = "Người dùng"
+                }
+        }
+    }
+
 }

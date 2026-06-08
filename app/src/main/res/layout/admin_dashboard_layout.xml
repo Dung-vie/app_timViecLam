@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:paddingVertical="30dp"
     android:background="#FFFFFF">
 
     <TextView
@@ -67,5 +69,24 @@
             android:layout_height="wrap_content"
             android:text="Duyệt bài đăng tuyển dụng"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:padding="7dp"
+        android:text="@string/txtLogout"
+        android:textAllCaps="false"
+        android:textColor="#A32D2D"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:backgroundTint="#FCEBEB"
+        app:cornerRadius="14dp"
+        app:elevation="0dp"
+        app:icon="@drawable/ic_logout"
+        app:iconTint="#A32D2D"
+        app:iconGravity="textStart"
+        app:strokeWidth="0dp" />
 
 </LinearLayout>
