@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
 import vn.edu.tdc.apptimvieclam.R
+import vn.edu.tdc.apptimvieclam.admin.activities.ApplicantListActivity
 import vn.edu.tdc.apptimvieclam.databinding.SettingLayoutBinding
 
 class SettingActivity : AppCompatActivity() {
@@ -24,10 +25,10 @@ class SettingActivity : AppCompatActivity() {
         loadRecuiterPost()
         loadAddRecuiter()
 
-        // Mở màn hình Lịch sử ứng tuyển (Công việc đã nộp)
+        // Mở màn hình Lịch sử ứng tuyển (Công việc đã nộp) -> user
         binding.txtAppliedJobs.setOnClickListener {
-            val intent = Intent(this, AppliedJobsActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, AppliedJobsActivity::class.java)
+//            startActivity(intent)
         }
 
         // Chuyển sang màn hình đổi mật khẩu
@@ -96,6 +97,12 @@ class SettingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Nhà tuyển dụng
+        binding.txtPost.setOnClickListener {
+            val intent = Intent(this, ApplicantListActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun loadUserName() {
@@ -130,17 +137,23 @@ class SettingActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { snapshot ->
 
-                val role =
-                    snapshot.getValue(String::class.java)
+                val role = snapshot.getValue(String::class.java)
 
                 binding.txtPost.visibility =
-                    if (
-                        role.equals("EMPLOYER", true) ||
-                        role.equals("ADMIN", true)
-                    )
+                    if (role.equals("EMPLOYER", true) || role.equals("ADMIN", true)) {
                         View.VISIBLE
-                    else
+                    }
+                    else {
                         View.GONE
+                    }
+
+                binding.txtAppliedJobs.visibility =
+                    if (role.equals("USER", true)) {
+                        View.VISIBLE
+                    }
+                    else {
+                        View.GONE
+                    }
             }
     }
 

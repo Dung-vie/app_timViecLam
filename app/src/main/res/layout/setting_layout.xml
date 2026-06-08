@@ -211,13 +211,14 @@
             android:background="@color/white">
 
             <LinearLayout
-                android:id="@+id/txtAppliedJobs"
+                android:id="@+id/txtPost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:padding="16dp">
+
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -229,7 +230,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Công việc đã nộp"
+                        android:text="Bài viết của bạn"
                         android:textColor="@color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -237,13 +238,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Xem lịch sử và trạng thái ứng tuyển"
+                        android:text="Xem và chỉnh sửa bài viết của ban"
                         android:textColor="#888780"
                         android:textSize="12sp" />
 
                 </LinearLayout>
-
             </LinearLayout>
+
         </LinearLayout>
 
         <TextView
@@ -355,14 +356,14 @@
                     android:background="#1A000000" />
 
                 <LinearLayout
-                    android:id="@+id/txtPost"
+                    android:id="@+id/txtAppliedJobs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:visibility="gone"
                     android:padding="16dp">
-
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -374,7 +375,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bài viết của bạn"
+                            android:text="Công việc đã nộp"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -382,14 +383,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Xem và chỉnh sửa bài viết của ban"
+                            android:text="Xem lịch sử và trạng thái ứng tuyển"
                             android:textColor="#888780"
                             android:textSize="12sp" />
 
                     </LinearLayout>
+
                 </LinearLayout>
 
-            </LinearLayout>
+        </LinearLayout>
         </LinearLayout>
 
         <Button

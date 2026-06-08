@@ -65,8 +65,6 @@
         <activity
             android:name=".admin.activities.ManageJobsActivity"
             android:exported="true"/>
-        <activity android:name=".activities.UpdatePasswordActivity"
-            android:exported="true"/>
         <activity
             android:name=".activities.ProfileActivity" />
         <activity
@@ -74,8 +72,7 @@
         <activity
             android:name=".admin.activities.ApplicantListActivity"/>
         <activity
-            android:name=".activities.EmployerActivity"
-            android:exported="false"/>
+            android:name=".activities.EmployerActivity"/>
 
     </application>
 

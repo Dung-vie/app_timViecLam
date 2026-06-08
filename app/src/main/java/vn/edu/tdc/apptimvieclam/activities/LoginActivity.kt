@@ -120,7 +120,7 @@ class LoginActivity : AppCompatActivity() {
 
         } else if (role == "EMPLOYER") {
             if (status.equals("ACTIVE", true )) {
-                val intent = Intent(this, EmployerActivity::class.java)
+                val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             } else {

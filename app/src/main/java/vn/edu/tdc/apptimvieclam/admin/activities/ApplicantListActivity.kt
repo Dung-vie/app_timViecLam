@@ -6,12 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
 import vn.edu.tdc.apptimvieclam.admin.adapters.ApplicantAdapter
-import vn.edu.tdc.apptimvieclam.databinding.ActivityApplicantListBinding
+import vn.edu.tdc.apptimvieclam.databinding.ApplicantListLayoutBinding
 import vn.edu.tdc.apptimvieclam.models.Applications
 
 class ApplicantListActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityApplicantListBinding
+    private lateinit var binding: ApplicantListLayoutBinding
     private lateinit var adapter: ApplicantAdapter
 
     private val applicantList = mutableListOf<Applications>()
@@ -19,7 +19,7 @@ class ApplicantListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityApplicantListBinding.inflate(layoutInflater)
+        binding = ApplicantListLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         adapter = ApplicantAdapter(
