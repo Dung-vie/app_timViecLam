@@ -156,10 +156,12 @@
                 </LinearLayout>
 
 
-                <ListView
+                <!-- Thay thế ListView cũ -->
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/list_job"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"/>
             </LinearLayout>
 
 
