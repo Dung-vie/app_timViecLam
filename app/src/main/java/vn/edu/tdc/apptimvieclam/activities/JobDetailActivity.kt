@@ -15,9 +15,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import vn.edu.tdc.apptimvieclam.R
+import vn.edu.tdc.apptimvieclam.models.UnifiedJob
 
 class JobDetailActivity : AppCompatActivity() {
-
     private lateinit var binding: JobDetailLayoutBinding
 
     private var isSaved = false
@@ -27,9 +27,26 @@ class JobDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val company = intent.getSerializableExtra("JOB") as? Company
+        val unifiedJob = intent.getSerializableExtra("JOB") as? UnifiedJob
+        val data = intent.getSerializableExtra("JOB")
 
-        if (company != null) {
-            loadData(company)
+        when (data) {
+
+            is Company -> {
+                loadData(data)
+
+                binding.btnApplyNow.setOnClickListener {
+                    applyJob(company)
+                }
+            }
+
+            is UnifiedJob -> {
+                loadData(data)
+
+                binding.btnApplyNow.setOnClickListener {
+                    applyJob(unifiedJob)
+                }
+            }
         }
 
         binding.btnApplyNow.setOnClickListener {
@@ -198,6 +215,165 @@ class JobDetailActivity : AppCompatActivity() {
         jobId?.let {
             savedRef.child(it).setValue(jobData)
         }
+    }
+
+    private fun loadData(job: UnifiedJob) {
+
+        binding.tvJobTitle.text = job.title
+
+        binding.tvCompany.text = job.companyName
+
+        binding.tvLocation.text = job.location
+
+        binding.tvSalary.text =
+            if (job.salary.isNotEmpty())
+                job.salary
+            else
+                "Thương lượng"
+
+        binding.tvJobType.text =
+            if (job.jobType.isNotEmpty())
+                job.jobType
+            else
+                "Không"
+
+        binding.tvPosition.text = "Không yêu cầu"
+
+        binding.tvDescription.text =
+            HtmlCompat.fromHtml(
+                job.description,
+                HtmlCompat.FROM_HTML_MODE_COMPACT
+            )
+
+        Glide.with(this)
+            .load(job.logoUrl)
+            .into(binding.ivCompanyLogo)
+    }
+
+    private fun saveJob(job: UnifiedJob?) {
+
+        if (job == null) return
+
+        val database = FirebaseDatabase.getInstance()
+        val savedRef = database.getReference("saved_jobs")
+
+        val savedId = savedRef.push().key
+
+        val jobData = hashMapOf(
+            "title" to job.title,
+            "company" to job.companyName,
+            "location" to job.location,
+            "description" to job.description
+        )
+
+        savedId?.let {
+            savedRef.child(it).setValue(jobData)
+        }
+    }
+
+    private fun applyJob(job: UnifiedJob?) {
+        if (job == null) return
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+
+        if (currentUser == null) {
+            Toast.makeText(
+                this,
+                "Vui lòng đăng nhập để ứng tuyển!",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
+
+        val currentUserId = currentUser.uid
+        val currentUserEmail = currentUser.email ?: ""
+
+        val currentJobId = job.id
+        val currentJobTitle = job.title
+        val currentCompany = job.companyName
+
+        val database =
+            FirebaseDatabase.getInstance()
+                .getReference("applications")
+
+        database.orderByChild("userId")
+            .equalTo(currentUserId)
+            .get()
+            .addOnSuccessListener { snapshot ->
+
+                var isAlreadyApplied = false
+
+                for (child in snapshot.children) {
+                    val app =
+                        child.getValue(Applications::class.java)
+
+                    if (app?.jobId == currentJobId) {
+                        isAlreadyApplied = true
+                        break
+                    }
+                }
+
+                if (isAlreadyApplied) {
+
+                    Toast.makeText(
+                        this,
+                        "Bạn đã ứng tuyển công việc này rồi!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                } else {
+
+                    val applicationId =
+                        database.push().key
+                            ?: return@addOnSuccessListener
+
+                    val currentDate =
+                        SimpleDateFormat(
+                            "dd/MM/yyyy",
+                            Locale.getDefault()
+                        ).format(Date())
+
+                    val newApplication =
+                        Applications(
+                            applicantName =
+                                currentUserEmail.substringBefore("@"),
+                            email = currentUserEmail,
+                            jobTitle = currentJobTitle,
+                            company = currentCompany,
+                            applyDate = currentDate,
+                            applicationId = applicationId,
+                            userId = currentUserId,
+                            jobId = currentJobId,
+                            status = "Pending"
+                        )
+
+                    database.child(applicationId)
+                        .setValue(newApplication)
+                        .addOnCompleteListener { task ->
+
+                            if (task.isSuccessful) {
+                                Toast.makeText(
+                                    this,
+                                    "Ứng tuyển thành công!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    "Ứng tuyển thất bại: ${task.exception?.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(
+                    this,
+                    "Lỗi kết nối với máy chủ",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
     }
 
 }

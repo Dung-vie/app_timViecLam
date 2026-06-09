@@ -32,6 +32,7 @@ class SearchActivity : AppCompatActivity() {
     private val allJobs = ArrayList<UnifiedJob>()  // tất cả jobs từ cả 2 nguồn
     private val apiJobs = ArrayList<UnifiedJob>()
     private val firebaseJobs = ArrayList<UnifiedJob>()
+    private var filterInitialized = false
 
     private var apiLoaded = false
     private var firebaseLoaded = false
@@ -66,12 +67,30 @@ class SearchActivity : AppCompatActivity() {
 
     // Gộp 2 nguồn và cập nhật UI
     private fun mergeAndDisplay() {
-        if (!apiLoaded || !firebaseLoaded) return  // chờ cả 2 load xong
+//        if (!apiLoaded || !firebaseLoaded) return  // chờ cả 2 load xong
+//        allJobs.clear()
+//        allJobs.addAll(firebaseJobs)  // Firebase jobs hiển thị trên
+//        allJobs.addAll(apiJobs)       // API jobs hiển thị dưới
+//        jobAdapter.updateList(ArrayList(allJobs))
+//        setupFilter()
+
+
         allJobs.clear()
-        allJobs.addAll(firebaseJobs)  // Firebase jobs hiển thị trên
-        allJobs.addAll(apiJobs)       // API jobs hiển thị dưới
+
+        // Firebase jobs chỉ có ACTIVE
+        allJobs.addAll(firebaseJobs)
+
+        // API load được thì thêm vào
+        if (apiLoaded) {
+            allJobs.addAll(apiJobs)
+        }
+
         jobAdapter.updateList(ArrayList(allJobs))
-        setupFilter()
+
+        if (!filterInitialized && allJobs.isNotEmpty()) {
+            setupFilter()
+            filterInitialized = true
+        }
     }
 
 
@@ -172,9 +191,15 @@ class SearchActivity : AppCompatActivity() {
             override fun onResponse(call: Call<CompanyList>, result: Response<CompanyList>) {
                 if (result.isSuccessful) {
                     apiJobs.clear()
-                    result.body()?.companyList?.forEach { company ->
-                        apiJobs.add(UnifiedJob.fromCompany(company))
+
+                    if (result.isSuccessful) {
+                        result.body()?.companyList?.forEach { company ->
+                            apiJobs.add(
+                                UnifiedJob.fromCompany(company)
+                            )
+                        }
                     }
+
                     apiLoaded = true
                     mergeAndDisplay()
                 }
