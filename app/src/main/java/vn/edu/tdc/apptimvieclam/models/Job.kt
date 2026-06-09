@@ -12,5 +12,6 @@ data class Job(
     var jobType: String = "",
     var companyLogo: String = "",
     var userId: String = "",
-    var createdAt: Long = 0
+    var createdAt: Long = 0,
+    var status: String = ""
 ) : Serializable

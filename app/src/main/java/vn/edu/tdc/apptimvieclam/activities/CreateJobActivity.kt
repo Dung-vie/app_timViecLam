@@ -107,13 +107,14 @@ class CreateJobActivity : AppCompatActivity() {
             description = description,
             companyLogo = "",
             userId = userId,
-            createdAt = System.currentTimeMillis()
+            createdAt = System.currentTimeMillis(),
+            status = "PENDING"
         )
 
         dbRef.child(jobId).setValue(job)
             .addOnSuccessListener {
                 setLoading(false)
-                Toast.makeText(this, "Đăng tin thành công!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Đăng tin thành công!. Vui lòng đợi Admin phê duyệt", Toast.LENGTH_SHORT).show()
                 finish()
             }
             .addOnFailureListener {

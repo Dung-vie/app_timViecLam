@@ -40,24 +40,18 @@ class ManageJobsActivity : AppCompatActivity() {
             .addValueEventListener(
                 object : ValueEventListener {
 
-                    override fun onDataChange(
-                        snapshot: DataSnapshot
-                    ) {
+                    override fun onDataChange(snapshot: DataSnapshot) {
 
                         jobs.clear()
 
                         for (item in snapshot.children) {
 
-                            val company =
-                                item.getValue(
-                                    Company::class.java
-                                )
+                            val company = item.getValue(Company::class.java)
 
                             if (
                                 company != null &&
-                                company.status == "pending"
+                                company.status.equals("PENDING", true)
                             ) {
-
                                 jobs.add(company)
                             }
                         }
@@ -65,10 +59,7 @@ class ManageJobsActivity : AppCompatActivity() {
                         adapter.notifyDataSetChanged()
                     }
 
-                    override fun onCancelled(
-                        error: DatabaseError
-                    ) {
-
+                    override fun onCancelled(error: DatabaseError) {
                     }
                 }
             )

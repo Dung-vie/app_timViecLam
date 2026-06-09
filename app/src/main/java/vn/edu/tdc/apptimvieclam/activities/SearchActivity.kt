@@ -123,7 +123,12 @@ class SearchActivity : AppCompatActivity() {
 
             for (child in snapshot.children) {
                 val job = child.getValue(Job::class.java)
-                if (job != null) list.add(job)
+                if (
+                    job != null &&
+                    job.status.equals("ACTIVE", true)
+                ) {
+                    list.add(job)
+                }
             }
 
             allJobs.clear()
@@ -152,6 +157,12 @@ class SearchActivity : AppCompatActivity() {
             startActivity(Intent(this, SettingActivity::class.java))
             finish()
         }
+
+        binding.bottomMenu.menuAdd.setOnClickListener {
+            startActivity(Intent(this, CreateJobActivity::class.java))
+        }
+
+
     }
 
     private fun loadAddRecuiter() {

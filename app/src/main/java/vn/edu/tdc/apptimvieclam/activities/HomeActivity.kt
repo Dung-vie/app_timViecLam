@@ -53,6 +53,13 @@ class HomeActivity : AppCompatActivity() {
 
         adapter = MyListViewAdapter(this, companies)
         binding.listJob.adapter = adapter
+        binding.listJob.setOnItemClickListener { _, _, position, _ ->
+            val company = companies[position]
+            val intent = Intent(this, JobDetailActivity::class.java)
+            intent.putExtra("JOB", company)
+
+            startActivity(intent)
+        }
 
         loadQuickFilters()
         playMenu()
@@ -102,6 +109,11 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, NotificationActivity::class.java)
             startActivity(intent)
 
+        }
+
+        binding.layoutSearch.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
         }
 
     }

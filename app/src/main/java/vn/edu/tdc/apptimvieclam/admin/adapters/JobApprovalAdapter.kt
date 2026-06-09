@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import vn.edu.tdc.apptimvieclam.databinding.AdminItemJobApprovalBinding
 import vn.edu.tdc.apptimvieclam.models.Company
+import vn.edu.tdc.apptimvieclam.models.Notification
 
 class JobApprovalAdapter(
     private val context: Activity,
@@ -64,15 +65,32 @@ class JobApprovalAdapter(
                 .getInstance()
                 .reference
                 .child("jobs")
-                .child(job.jobId)
+                .child(job.id)
                 .child("status")
-                .setValue("approved")
+                .setValue("ACTIVE")
+                .addOnSuccessListener {
 
-            Toast.makeText(
-                context,
-                "Đã duyệt bài đăng",
-                Toast.LENGTH_SHORT
-            ).show()
+                    val notification = Notification(
+                        System.currentTimeMillis(),
+                        false,
+                        "JOB_APPROVED",
+                        "Bài tuyển dụng ${job.title} đã được Admin phê duyệt.",
+                        "Bài tuyển dụng được duyệt"
+                    )
+
+                    FirebaseDatabase.getInstance()
+                        .reference
+                        .child("notifications")
+                        .child(job.recruiterUid)
+                        .push()
+                        .setValue(notification)
+
+                    Toast.makeText(
+                        context,
+                        "Đã duyệt bài đăng",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
         }
 
         binding.btnRejectJob.setOnClickListener {
@@ -81,14 +99,32 @@ class JobApprovalAdapter(
                 .getInstance()
                 .reference
                 .child("jobs")
-                .child(job.jobId)
-                .removeValue()
+                .child(job.id)
+                .child("status")
+                .setValue("REJECTED")
+                .addOnSuccessListener {
 
-            Toast.makeText(
-                context,
-                "Đã từ chối bài đăng",
-                Toast.LENGTH_SHORT
-            ).show()
+                    val notification = Notification(
+                        System.currentTimeMillis(),
+                        false,
+                        "JOB_REJECTED",
+                        "Bài tuyển dụng ${job.title} không được Admin phê duyệt.",
+                        "Bài tuyển dụng bị từ chối"
+                    )
+
+                    FirebaseDatabase.getInstance()
+                        .reference
+                        .child("notifications")
+                        .child(job.recruiterUid)
+                        .push()
+                        .setValue(notification)
+
+                    Toast.makeText(
+                        context,
+                        "Đã từ chối bài đăng",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
         }
 
         return binding.root
