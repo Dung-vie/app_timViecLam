@@ -44,7 +44,7 @@ class SearchActivity : AppCompatActivity() {
         playMenu()
         setupRecyclerView()
         setupSearch()
-//        setupFilter()
+        setupFilter()
         loadAddRecuiter()
         loadFromApi()
         loadFromFirebase()
